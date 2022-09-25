@@ -25,6 +25,7 @@
                                 <th class="min-w-50px">الهاتف</th>
                                 <th class="min-w-50px">الايميل</th>
                                 <th class="min-w-50px">تاريخ الانشاء</th>
+                                <th class="min-w-50px">الحالة</th>
                                 <th class="min-w-50px rounded-end">العمليات</th>
                             </tr>
                             </thead>
@@ -90,17 +91,35 @@
             {data: 'phone', name: 'phone'},
             {data: 'email', name: 'email'},
             {data: 'created_at', name: 'created_at'},
+            {data: 'status', name: 'status'},
             {data: 'action', name: 'action', orderable: false, searchable: false},
         ]
         showData('{{route('users_adviser')}}', columns);
         // Delete Using Ajax
         deleteScript('{{route('users_adviser_delete')}}');
-        // Add Using Ajax
-        {{--showAddModal('{{route('admins.create')}}');--}}
-        {{--addScript();--}}
-        {{--// Add Using Ajax--}}
-        {{--showEditModal('{{route('admins.edit',':id')}}');--}}
-        {{--editScript();--}}
+
+
+        // change users status
+        $(document).on('click', '.statusSpan', function (event) {
+            var id = $(this).data("id")
+            $.ajax({
+                type: 'POST',
+                url: "{{route('userActivation')}}",
+                data: {
+                    '_token': "{{csrf_token()}}",
+                    'id': id,
+                },
+                success: function (data) {
+                    if (data.success === true) {
+                        $('#dataTable').DataTable().ajax.reload();
+                        toastr.success(data.message)
+                    } else {
+                        toastr.error('هناك خطأ ما ...')
+                    }
+                }
+            })
+        });
+    </script>
     </script>
 @endsection
 

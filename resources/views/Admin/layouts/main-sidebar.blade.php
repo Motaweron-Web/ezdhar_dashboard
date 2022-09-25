@@ -40,6 +40,13 @@
         </li>
 
         <li class="slide">
+            <a class="side-menu__item" href="{{route('projects.index')}}">
+                <i class="fe fe-package side-menu__icon"></i>
+                <span class="side-menu__label">المشاريع</span>
+            </a>
+        </li>
+
+        <li class="slide">
             <a class="side-menu__item" href="{{route('contact_us.index')}}">
                 <i class="fe fe-message-circle side-menu__icon"></i>
                 <span class="side-menu__label">الرسائل</span>

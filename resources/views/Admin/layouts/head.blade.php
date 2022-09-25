@@ -35,6 +35,9 @@
 <link id="theme" rel="stylesheet" type="text/css" media="all" href="{{asset('assets/admin')}}/assets/colors/color1.css" />
 <!-- CK Editor -->
 <script src="https://cdn.ckeditor.com/ckeditor5/35.1.0/classic/ckeditor.js"></script>
+<!-- bootstrap-->
+<link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
+<script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
 <!-- TOASTR CSS -->
 @toastr_css
 

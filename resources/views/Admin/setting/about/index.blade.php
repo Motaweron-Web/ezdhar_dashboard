@@ -40,15 +40,10 @@
             {data: 'id', name: 'id'},
             {data: 'about_ar', name: 'about_ar'},
             {data: 'about_en', name: 'about_en'},
-            // {data: 'terms_ar', name: 'terms_ar'},
-            // {data: 'terms_en', name: 'terms_en'},
-            // {data: 'privacy_ar', name: 'privacy_ar'},
-            // {data: 'privacy_en', name: 'privacy_en'},
+
             {data: 'action', name: 'action', orderable: false, searchable: false},
         ]
         showData('{{route('setting.about')}}', columns);
-        // Delete Using Ajax
-        {{--deleteScript('{{route('delete_setting')}}');--}}
         {{--// Add Using Ajax--}}
         showAddModal('{{route('setting.about')}}');
         addScript();

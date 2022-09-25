@@ -45,15 +45,9 @@ class FeasibilityStudyController extends Controller
     public function delete(Request $request)
     {
         $feasibility_study = FeasibilityStudy::where('id', $request->id)->first();
-        if ($feasibility_study == auth()->guard('admin')->user()) {
-            return response(['message'=>"لا يمكن حذف المشرف المسجل به !",'status'=>501],200);
-        } else {
-            if (file_exists($feasibility_study->image)) {
-                unlink($feasibility_study->image);
-            }
+
             $feasibility_study->delete();
             return response(['message'=>'تم الحذف بنجاح','status'=>200],200);
-        }
     } //end of delete
 
 

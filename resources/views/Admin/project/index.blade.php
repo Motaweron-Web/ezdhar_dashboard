@@ -1,16 +1,16 @@
 @extends('Admin/layouts/master')
 
 @section('title')
-    {{($setting->title) ?? ''}} | الاعدادت
+    {{($setting->title) ?? ''}} | المشاريع
 @endsection
-@section('page_name') الاعدادت @endsection
+@section('page_name') المشاريع @endsection
 @section('content')
 
     <div class="row">
         <div class="col-md-12 col-lg-12">
             <div class="card">
                 <div class="card-header">
-                    <h3 class="card-title"> الاعدادت {{($setting->title) ?? ''}}</h3>
+                    <h3 class="card-title"> المشاريع {{($setting->title) ?? ''}}</h3>
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
@@ -19,13 +19,13 @@
                             <thead>
                             <tr class="fw-bolder text-muted bg-light">
                                 <th class="min-w-25px">#</th>
-                                <th class="min-w-50px">من نحن بالعربية</th>
-                                <th class="min-w-125px">من نحن بالانجليزية</th>
-                                <th class="min-w-50px">الشروط و الاحكام بالعربية</th>
-                                <th class="min-w-125px">الشروط و الاحكام بالانجليزية</th>
-                                <th class="min-w-50px">الخصوصية بالعربية</th>
-                                <th class="min-w-125px">الخصوصية بالانجليزية</th>
-
+                                <th class="min-w-50px">الاسم</th>
+                                <th class="min-w-50px">الصورة</th>
+                                <th class="min-w-50px">تقييم العميل</th>
+                                <th class="min-w-50px rounded-end">تقييم المستشارين</th>
+                                <th class="min-w-50px rounded-end">التكلفة</th>
+                                <th class="min-w-50px rounded-end">الحالة</th>
+                                <th class="min-w-50px rounded-end">تاريخ الانشاء</th>
                                 <th class="min-w-50px rounded-end">العمليات</th>
                             </tr>
                             </thead>
@@ -66,7 +66,7 @@
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="example-Modal3">بيانات الاعدادات </h5>
+                        <h5 class="modal-title" id="example-Modal3">البيانات </h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -85,23 +85,20 @@
     <script>
         var columns = [
             {data: 'id', name: 'id'},
-            {data: 'about_ar', name: 'about_ar'},
-            {data: 'about_en', name: 'about_en'},
-            {data: 'terms_ar', name: 'terms_ar'},
-            {data: 'terms_en', name: 'terms_en'},
-            {data: 'privacy_ar', name: 'privacy_ar'},
-            {data: 'privacy_en', name: 'privacy_en'},
+            {data: 'title', name: 'title'},
+            {data: 'image', name: 'image'},
+            {data: 'ownership_rate', name: 'ownership_rate'},
+            {data: 'success_rate', name: 'success_rate'},
+            {data: 'cost', name: 'cost'},
+            {data: 'status', name: 'status'},
+            {data: 'created_at', name: 'created_at'},
+
             {data: 'action', name: 'action', orderable: false, searchable: false},
         ]
-        showData('{{route('settings.index')}}', columns);
+        showData('{{route('projects.index')}}', columns)   ;
         // Delete Using Ajax
-        deleteScript('{{route('delete_setting')}}');
+        deleteScript('{{route('delete_projects')}}');
         // Add Using Ajax
-        showAddModal('{{route('settings.create')}}');
-        addScript();
-        // Add Using Ajax
-        showEditModal('{{route('settings.edit',':id')}}');
-        editScript();
     </script>
 @endsection
 

@@ -9,6 +9,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Yajra\DataTables\DataTables;
+use function Symfony\Component\String\s;
 
 class UsersController extends Controller
 {
@@ -18,6 +19,7 @@ class UsersController extends Controller
     {
         if ($request->ajax()) {
             $clients = Users::where('user_type', 'client')->select('*');
+
             return Datatables::of($clients)
                 ->addColumn('action', function ($clients) {
                     return '
@@ -31,6 +33,14 @@ class UsersController extends Controller
                     return '
                     <img alt="image" onclick="window.open(this.src)" class="avatar avatar-md rounded-circle" src="' . get_user_file($clients->image) . '">
                     ';
+                })
+                ->editColumn('status', function ($data) {
+                    if($data->status == 0)
+                        $span = '<span style="cursor: pointer" data-id="'.$data->id.'" class="badge badge-danger statusSpan">محظور</span';
+                    else
+                        $span = '<span style="cursor: pointer" data-id="'.$data->id.'"  class="badge badge-success statusSpan">مفعل</span';
+
+                    return $span;
                 })
                 ->editColumn('created_at', function ($user) {
                 return $user->created_at ? with(new Carbon($user->created_at))->format('m/d/Y') : '';
@@ -46,6 +56,19 @@ class UsersController extends Controller
         }
 
     } //end of index
+
+    public function userActivation(Request $request)
+    {
+        $user = Users::find($request->id);
+        ($user->status == '0') ? $user->status = '1' : $user->status = '0';
+        $user->save();
+        return response()->json(
+            [
+                'success' => true,
+                'message' => 'تم تغيير حالة المستخدم بنجاح'
+            ]);
+    }
+
     public function client_delete(Request $request)
     {
         $client = Users::where('id', $request->id)->first();
@@ -72,6 +95,14 @@ class UsersController extends Controller
                     return '
                     <img alt="image" onclick="window.open(this.src)" class="avatar avatar-md rounded-circle" src="' . get_user_file($freelancers->image) . '">
                     ';
+                })
+                ->editColumn('status', function ($data) {
+                    if($data->status == 0)
+                        $span = '<span style="cursor: pointer" data-id="'.$data->id.'" class="badge badge-danger statusSpan">محظور</span';
+                    else
+                        $span = '<span style="cursor: pointer" data-id="'.$data->id.'"  class="badge badge-success statusSpan">مفعل</span';
+
+                    return $span;
                 })
                 ->editColumn('created_at', function ($user) {
                     return $user->created_at ? with(new Carbon($user->created_at))->format('m/d/Y') : '';
@@ -111,6 +142,14 @@ class UsersController extends Controller
                     return '
                     <img alt="image" onclick="window.open(this.src)" class="avatar avatar-md rounded-circle" src="' . get_user_file($advisers->image) . '">
                     ';
+                })
+                ->editColumn('status', function ($data) {
+                    if($data->status == 0)
+                        $span = '<span style="cursor: pointer" data-id="'.$data->id.'" class="badge badge-danger statusSpan">محظور</span';
+                    else
+                        $span = '<span style="cursor: pointer" data-id="'.$data->id.'"  class="badge badge-success statusSpan">مفعل</span';
+
+                    return $span;
                 })
                 ->editColumn('created_at', function ($user) {
                     return $user->created_at ? with(new Carbon($user->created_at))->format('m/d/Y') : '';
