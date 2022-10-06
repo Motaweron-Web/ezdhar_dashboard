@@ -47,6 +47,20 @@
         </li>
 
         <li class="slide">
+            <a class="side-menu__item" href="{{route('services.index')}}">
+                <i class="fe fe-hash side-menu__icon"></i>
+                <span class="side-menu__label">طلب خدمة</span>
+            </a>
+        </li>
+
+        <li class="slide">
+            <a class="side-menu__item" href="{{route('reports_index')}}">
+                <i class="fe fe-alert-triangle side-menu__icon"></i>
+                <span class="side-menu__label">البلاغات</span>
+            </a>
+        </li>
+
+        <li class="slide">
             <a class="side-menu__item" href="{{route('contact_us.index')}}">
                 <i class="fe fe-message-circle side-menu__icon"></i>
                 <span class="side-menu__label">الرسائل</span>

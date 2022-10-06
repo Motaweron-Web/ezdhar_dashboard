@@ -5,22 +5,22 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Project extends Model
+class Report extends Model
 {
     use HasFactory;
 
-    protected $table = 'projects';
+    protected $table = 'report_details';
 
-    protected $guarded = [];
-
-    public function category()
-    {
-        return $this->belongsTo(Category::class,'category_id','id');
-    }
+    protected $fillable = [
+        'user_id',
+        'reason',
+        'details',
+        'image',
+        'created_at'
+    ];
 
     public function user()
     {
         return $this->belongsTo(Users::class,'user_id','id');
     }
-
 }

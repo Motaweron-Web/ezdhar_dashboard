@@ -6,40 +6,6 @@
     الرئـيسية
 @endsection
 @section('content')
-    <div class="row">
-        <div class="col-md-12">
-            <div class="card  banner">
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col-xl-3 col-lg-2 text-center">
-                            <img src="https://laravel.spruko.com/yoha/Sidemenu-Icon-Light-rtl/assets/images/pngs/dash2.png" alt="img" class="w-95">
-                        </div>
-                        <div class="col-xl-9 col-lg-10 pl-lg-0">
-                            <div class="row">
-                                <div class="col-xl-7 col-lg-6">
-                                    <div class="text-right text-white mt-xl-4">
-                                        <h3 class="font-weight-semibold">Congratulations Steven</h3>
-                                        <h4 class="font-weight-normal">You are Reached your targeted milestone</h4>
-                                        <p class="mb-lg-0 text-white-50">If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text.</p>
-                                    </div>
-                                </div>
-                                <div class="col-xl-5 col-lg-6 text-lg-center mt-xl-4">
-                                    <h5 class="font-weight-semibold mb-1 text-white">Clicks &amp; Conversions Today</h5>
-                                    <h2 class="display-2 mb-3 number-font text-white">90%</h2>
-                                    <div class="btn-list mb-xl-0">
-                                        <a href="#" class="btn btn-dark mb-xl-0">Check Details</a>
-                                        <a href="#" class="btn btn-white mb-xl-0" id="skip">No, Thanks</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-
 
     <div class="row">
         <div class="col-lg-4 col-md-4 col-sm-12 col-xl-4">
@@ -47,14 +13,26 @@
                 <div class="card-body">
                     <div class="row">
                         <div class="col">
-                            <h6 class="">New Sessions(Avg)</h6>
-                            <h3 class="mb-2 number-font">67.96%</h3>
-                            <p class="text-muted">
-                                <span class="text-muted"><i class="fa fa-chevron-circle-up text-muted ml-1"></i> 3%</span>
-                                last month
-                            </p>
+                            <h6 class="bold font-weight-bolder">عدد المشاريع</h6>
+                            <h3 class="mb-2 number-font">{{ $projects->count() }}</h3>
                             <div class="progress h-2">
-                                <div class="progress-bar bg-orange w-50" role="progressbar"></div>
+                                <div class="progress-bar bg-orange
+                                    @if($projects->count() > 5 )
+                                 w-10
+                                @elseif($projects->count() > 15)
+                                    w-25
+                                @elseif($projects->count() > 45)
+                                    w-50
+                                @elseif($projects->count() > 70)
+                                    w-75
+                                @elseif($projects->count() > 90)
+                                    w-100
+                                @elseif($projects->count() > 150)
+                                    w-260
+                                @elseif($projects->count() > 200)
+                                    w-337
+                                 @endif
+                                " role="progressbar"></div>
                             </div>
                         </div>
                     </div>
@@ -66,14 +44,26 @@
                 <div class="card-body">
                     <div class="row">
                         <div class="col">
-                            <h6 class="">Time On site(Avg)</h6>
-                            <h3 class="mb-2 number-font">5m:45s</h3>
-                            <p class="text-muted">
-                                <span class="text-muted"><i class="fa fa-chevron-circle-down text-muted ml-1"></i> 0.15%</span>
-                                last month
-                            </p>
+                            <h6 class="bold font-weight-bolder">عدد الاقسام</h6>
+                            <h3 class="mb-2 number-font">{{ $category->count() }}</h3>
                             <div class="progress h-2">
-                                <div class="progress-bar bg-secondary w-50" role="progressbar"></div>
+                                <div class="progress-bar bg-secondary
+                                @if($category->count() > 5 )
+                                 w-10
+                                @elseif($category->count() > 15)
+                                    w-25
+                                @elseif($category->count() > 45)
+                                    w-50
+                                @elseif($category->count() > 70)
+                                    w-75
+                                @elseif($category->count() > 90)
+                                    w-100
+                                @elseif($category->count() > 150)
+                                    w-260
+                                @elseif($category->count() > 200)
+                                    w-337
+                                 @endif
+                                " role="progressbar"></div>
                             </div>
                         </div>
                     </div>
@@ -85,14 +75,26 @@
                 <div class="card-body">
                     <div class="row">
                         <div class="col">
-                            <h6 class="">Page Views(Avg)</h6>
-                            <h3 class="mb-2 number-font">8.14</h3>
-                            <p class="text-muted">
-                                <span class="text-muted"><i class="fa fa-chevron-circle-down text-muted ml-1"></i> 0.15%</span>
-                                last month
-                            </p>
+                            <h6 class="">عدد العملاء</h6>
+                            <h3 class="mb-2 number-font">{{ $users->count() }}</h3>
                             <div class="progress h-2">
-                                <div class="progress-bar bg-secondary1 w-50" role="progressbar"></div>
+                                <div class="progress-bar bg-secondary1
+                                @if($users->count() > 5 )
+                                 w-10
+                                @elseif($users->count() > 15)
+                                    w-25
+                                @elseif($users->count() > 45)
+                                    w-50
+                                @elseif($users->count() > 70)
+                                    w-75
+                                @elseif($users->count() > 90)
+                                    w-100
+                                @elseif($users->count() > 150)
+                                    w-260
+                                @elseif($users->count() > 200)
+                                    w-337
+                                 @endif"
+                                     role="progressbar"></div>
                             </div>
                         </div>
                     </div>
@@ -105,76 +107,27 @@
         <div class="col-lg-8 col-sm-12 col-xl-8">
             <div class="card">
                 <div class="card-header">
-                    <h3 class="card-title">Countrywise Traffics</h3>
+                    <h3 class="card-title">الرسائل</h3>
+                    <span class="btn btn-sm btn-danger">{{$contactus->count()}}</span>
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
                         <table class="table table-bordered table-hover  mb-0 text-nowrap">
                             <thead>
                             <tr>
-                                <th>Country</th>
-                                <th>Sessions</th>
-                                <th>Bounce Rate</th>
-                                <th>Time On site(Avg)</th>
-                                <th>Status</th>
+                                <th>الاسم</th>
+                                <th>الموضوع</th>
+                                <th>الرسالة</th>
                             </tr>
                             </thead>
                             <tbody>
+                                @foreach($contactus as $contact)
                             <tr>
-                                <td><img src="https://laravel.spruko.com/yoha/Sidemenu-Icon-Light-rtl/assets/images/flags/us.svg" class="w-5 h-5 ml-2" alt="">United State</td>
-                                <td>13,786</td>
-                                <td>56.8%</td>
-                                <td>2m:56s</td>
-                                <td>
-                                    <div class="progress h-1 mt-2">
-                                        <div class="progress-bar bg-primary w-50" role="progressbar"></div>
-                                    </div>
-                                </td>
+                                    <td>{{ $contact->name }}</td>
+                                    <td>{{ $contact->subject }}</td>
+                                    <td>{{ $contact->message }}</td>
                             </tr>
-                            <tr>
-                                <td><img src="https://laravel.spruko.com/yoha/Sidemenu-Icon-Light-rtl/assets/images/flags/in.svg" class="w-5 h-5 ml-2" alt="">India</td>
-                                <td>16,876</td>
-                                <td>34.5%</td>
-                                <td>1m:43s</td>
-                                <td>
-                                    <div class="progress h-1 mt-2">
-                                        <div class="progress-bar bg-orange  w-20" role="progressbar"></div>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><img src="https://laravel.spruko.com/yoha/Sidemenu-Icon-Light-rtl/assets/images/flags/ru.svg" class="w-5 h-5 ml-2" alt="">Russia</td>
-                                <td>45,863</td>
-                                <td>93.76%</td>
-                                <td>8m:16s</td>
-                                <td>
-                                    <div class="progress h-1 mt-2">
-                                        <div class="progress-bar bg-secondary1 w-60" role="progressbar"></div>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><img src="https://laravel.spruko.com/yoha/Sidemenu-Icon-Light-rtl/assets/images/flags/ca.svg" class="w-5 h-5 ml-2" alt="">Canada</td>
-                                <td>37,917</td>
-                                <td>46.76%</td>
-                                <td>5m:76s</td>
-                                <td>
-                                    <div class="progress h-1 mt-2">
-                                        <div class="progress-bar bg-secondary w-40" role="progressbar"></div>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><img src="https://laravel.spruko.com/yoha/Sidemenu-Icon-Light-rtl/assets/images/flags/ge.svg" class="w-5 h-5 ml-2" alt="">Germany</td>
-                                <td>67,967</td>
-                                <td>34.876%</td>
-                                <td>5m:34s</td>
-                                <td>
-                                    <div class="progress h-1 mt-2">
-                                        <div class="progress-bar bg-warning w-30" role="progressbar"></div>
-                                    </div>
-                                </td>
-                            </tr>
+                                @endforeach
                             </tbody>
                         </table>
                     </div>

@@ -1,23 +1,16 @@
 @extends('Admin/layouts/master')
 
 @section('title')
-    {{($setting->title) ?? ''}} | الاقسام
+    {{($setting->title) ?? ''}} | طلب خدمة
 @endsection
-@section('page_name') الاقسام @endsection
+@section('page_name') طلب خدمة @endsection
 @section('content')
 
     <div class="row">
         <div class="col-md-12 col-lg-12">
             <div class="card">
                 <div class="card-header">
-                    <h3 class="card-title"> الاقسام {{($setting->title) ?? ''}}</h3>
-                    <div class="">
-                        <button class="btn btn-secondary btn-icon text-white addBtn">
-									<span>
-										<i class="fe fe-plus"></i>
-									</span> اضافة جديد
-                        </button>
-                    </div>
+                    <h3 class="card-title"> طلب خدمة {{($setting->title) ?? ''}}</h3>
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
@@ -26,13 +19,38 @@
                             <thead>
                             <tr class="fw-bolder text-muted bg-light">
                                 <th class="min-w-25px">#</th>
-                                <th class="min-w-50px">الصورة</th>
-                                <th class="min-w-50px">الاسم بالعربية</th>
-                                <th class="min-w-125px">الاسم بالانجليزية</th>
-                                <th class="min-w-125px">عدد الطلبات</th>
-                                <th class="min-w-50px rounded-end">العمليات</th>
+                                <th class="min-w-50px">اسم العميل</th>
+                                <th class="min-w-50px">اسم مقدم الخدمة</th>
+                                <th class="min-w-50px">القسم</th>
+                                <th class="min-w-50px">السعر</th>
+                                <th class="min-w-50px">التفاصيل</th>
+                                <th class="min-w-50px">تاريخ الطلب</th>
+                                 <th class="min-w-50px rounded-end">العمليات</th>
                             </tr>
                             </thead>
+                                @foreach($services_request as $service)
+                            <tbody>
+                            <tr>
+
+                                        <td>{{ $loop->iteration }}</td>
+                                        <td>{{ $service->client->first_name }}</td>
+                                        <td>{{ $service->freelancer->first_name }}</td>
+                                        <td>{{ $service->subCategory->title_ar }}</td>
+                                        <td>{{ $service->price }}</td>
+                                        <td>{{ $service->details }}</td>
+                                        <td>{{ $service->created_at->format('m/d/Y') }}</td>
+                                        <td>
+                                            <form method="post" action="{{ route('delete_services') }}">
+                                                @csrf
+                                                <input type="hidden" value="{{ $service->id }}" name="id">
+                                            <button class="btn btn-pill btn-danger-light" type="submit">
+                                                <i class="fas fa-trash"></i>
+                                            </button>
+                                            </form>
+                                        </td>
+                            </tr>
+                            </tbody>
+                                @endforeach
                         </table>
                     </div>
                 </div>
@@ -70,7 +88,7 @@
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="example-Modal3">بيانات القسم</h5>
+                        <h5 class="modal-title" id="example-Modal3">بيانات المشرف</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -86,25 +104,8 @@
     @include('Admin/layouts/myAjaxHelper')
 @endsection
 @section('ajaxCalls')
-    <script>
-        var columns = [
-            {data: 'id', name: 'id'},
-            {data: 'image', name: 'image'},
-            {data: 'title_ar', name: 'title_ar'},
-            {data: 'title_en', name: 'title_en'},
-            {data: 'order_count', name: 'order_count'},
-            {data: 'action', name: 'action', orderable: false, searchable: false},
-        ]
-        showData('{{route('categories.index')}}', columns);
-        // Delete Using Ajax
-        deleteScript('{{route('delete_category')}}');
-        // Add Using Ajax
-        showAddModal('{{route('categories.create')}}');
-        addScript();
-        // Add Using Ajax
-        showEditModal('{{route('categories.edit',':id')}}');
-        editScript();
-    </script>
+
+
 @endsection
 
 

@@ -27,6 +27,7 @@ class StoreCategory extends FormRequest
         return [
             'title_ar'      => 'required',
             'title_en'      => 'required',
+            'order_count'      => 'required|numeric',
             'image'     => 'mimes:jpeg,jpg,png,gif,webp',
         ];
     }
@@ -35,8 +36,10 @@ class StoreCategory extends FormRequest
     {
         return [
             'image.mimes'                => 'صيغة الصورة غير مسموحة',
-            'title_ar.required'              => 'يجب ادخال الاسم',
-            'title_en.required'              => 'يجب ادخال الاسم',
+            'title_ar.required'              => 'يجب إدخال الاسم',
+            'title_en.required'              => 'يجب إدخال الاسم',
+            'order_count.required'              => 'يجب إدخال عدد الطلبات',
+            'order_count.numeric'              => 'يجب إدخال عدد الطلبات أرقام',
         ];
     }
 }

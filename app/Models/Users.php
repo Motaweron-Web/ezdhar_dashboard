@@ -27,4 +27,14 @@ class Users extends Model
         return $this->hasMany(Project::class,'user_id','id');
     }
 
+    public function services()
+    {
+        return $this->hasMany(ServicesRequest::class);
+    }
+
+    public function reports()
+    {
+        return $this->hasMany(Report::class);
+    }
+
 }

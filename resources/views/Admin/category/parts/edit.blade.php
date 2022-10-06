@@ -15,6 +15,10 @@
             <label for="name" class="form-control-label">الاسم بالانجليزية</label>
             <input type="text" class="form-control" name="title_en" id="title_en" value="{{$category->title_en}}">
         </div>
+        <div class="form-group">
+            <label for="name" class="form-control-label">عدد الطلبات</label>
+            <input type="text" class="form-control" name="order_count" id="order_count" value="{{$category->order_count}}">
+        </div>
         <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">اغلاق</button>
             <button type="submit" class="btn btn-success" id="updateButton">تحديث</button>

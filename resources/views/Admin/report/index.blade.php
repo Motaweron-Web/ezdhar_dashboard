@@ -1,38 +1,61 @@
 @extends('Admin/layouts/master')
 
 @section('title')
-    {{($setting->title) ?? ''}} | الاقسام
+    {{($setting->title) ?? ''}} | البلاغات
 @endsection
-@section('page_name') الاقسام @endsection
+@section('page_name') البلاغات @endsection
 @section('content')
 
     <div class="row">
         <div class="col-md-12 col-lg-12">
             <div class="card">
                 <div class="card-header">
-                    <h3 class="card-title"> الاقسام {{($setting->title) ?? ''}}</h3>
-                    <div class="">
-                        <button class="btn btn-secondary btn-icon text-white addBtn">
-									<span>
-										<i class="fe fe-plus"></i>
-									</span> اضافة جديد
-                        </button>
-                    </div>
+                    <h3 class="card-title"> البلاغات {{($setting->title) ?? ''}}</h3>
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
                         <!--begin::Table-->
-                        <table class="table table-striped table-bordered text-nowrap w-100" id="dataTable">
+                        <table class="table table-striped table-bordered text-wrap w-100" id="dataTable">
                             <thead>
                             <tr class="fw-bolder text-muted bg-light">
                                 <th class="min-w-25px">#</th>
-                                <th class="min-w-50px">الصورة</th>
-                                <th class="min-w-50px">الاسم بالعربية</th>
-                                <th class="min-w-125px">الاسم بالانجليزية</th>
-                                <th class="min-w-125px">عدد الطلبات</th>
-                                <th class="min-w-50px rounded-end">العمليات</th>
+                                <th class="min-w-50px">اسم العميل</th>
+                                <th class="min-w-50px">سبب الشكوي</th>
+                                <th class="min-w-50px">التفاصيل</th>
+                                <th class="min-w-50px">صوره</th>
+                                <th class="min-w-50px">الخدمة</th>
+                                <th class="min-w-50px">تاريخ الطلب</th>
+                                 <th class="min-w-50px rounded-end">العمليات</th>
                             </tr>
                             </thead>
+                                @foreach($reports as $report)
+                            <tbody>
+                            <tr>
+
+                                        <td>{{ $loop->iteration }}</td>
+                                        <td>{{ $report->user->first_name }}</td>
+                                        <td>{{ $report->reason }}</td>
+                                        <td>{{ $report->details }}</td>
+                                        <td><img alt="image" onclick="window.open(this.src)" class="avatar avatar-md rounded-circle" src="{{get_user_file($report->image)}}"></td>
+                                        <td><form method="get" action="{{ route('service_reports' , $report->user->id) }}">
+                                                @csrf
+                                                <button class="btn btn-pill btn-info-light" type="submit">
+                                                    <i class="fas fa-door-open"></i>
+                                                </button>
+                                            </form></td>
+                                        <td>{{ $report->created_at->format('m/d/Y') }}</td>
+                                        <td>
+                                            <form method="post" action="{{ route('delete_reports') }}">
+                                                @csrf
+                                                <input type="hidden" value="{{ $report->id }}" name="id">
+                                            <button class="btn btn-pill btn-danger-light" type="submit">
+                                                <i class="fas fa-trash"></i>
+                                            </button>
+                                            </form>
+                                        </td>
+                            </tr>
+                            </tbody>
+                                @endforeach
                         </table>
                     </div>
                 </div>
@@ -70,7 +93,7 @@
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="example-Modal3">بيانات القسم</h5>
+                        <h5 class="modal-title" id="example-Modal3">بيانات المشرف</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -86,25 +109,8 @@
     @include('Admin/layouts/myAjaxHelper')
 @endsection
 @section('ajaxCalls')
-    <script>
-        var columns = [
-            {data: 'id', name: 'id'},
-            {data: 'image', name: 'image'},
-            {data: 'title_ar', name: 'title_ar'},
-            {data: 'title_en', name: 'title_en'},
-            {data: 'order_count', name: 'order_count'},
-            {data: 'action', name: 'action', orderable: false, searchable: false},
-        ]
-        showData('{{route('categories.index')}}', columns);
-        // Delete Using Ajax
-        deleteScript('{{route('delete_category')}}');
-        // Add Using Ajax
-        showAddModal('{{route('categories.create')}}');
-        addScript();
-        // Add Using Ajax
-        showEditModal('{{route('categories.edit',':id')}}');
-        editScript();
-    </script>
+
+
 @endsection
 
 

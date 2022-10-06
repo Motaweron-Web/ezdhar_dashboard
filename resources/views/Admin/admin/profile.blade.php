@@ -1,5 +1,5 @@
 @extends('Admin/layouts/master')
-@section('title') {{$setting->title}} | Profile @endsection
+@section('title') {{$setting->title ?? ''}} | Profile @endsection
 
 @section('page_name')
     My Profile
@@ -12,11 +12,11 @@
                     <div class="wideget-user text-center">
                         <div class="wideget-user-desc">
                             <div class="wideget-user-img">
-                                <img class="" src="{{get_user_photo($admin->photo)}}" alt="img">
+                                <img class="" src="{{get_user_file($admin->image)}}" alt="img">
                             </div>
                             <div class="user-wrap">
                                 <h4 class="mb-1 text-capitalize">{{$admin->name}}</h4>
-{{--                                <h6 class="text-muted mb-4"> {{$admin->created_at->diffForHumans()}}</h6>--}}
+                                <h6 class="text-muted mb-4"> {{$admin->created_at->diffForHumans()}}</h6>
                                 <h6 class="text-muted mb-4"> {{$admin->email}}</h6>
                             </div>
                         </div>

@@ -10,9 +10,7 @@ Route::group(['prefix'=>'admin'],function (){
 });
 
 Route::group(['prefix'=>'admin','middleware'=>'auth:admin'],function (){
-    Route::get('/', function () {
-        return view('Admin/index');
-    })->name('adminHome');
+    Route::get('/','MainController@index')->name('adminHome');
 
     ############ Admins #############
     Route::resource('admins','AdminController');
@@ -61,6 +59,15 @@ Route::group(['prefix'=>'admin','middleware'=>'auth:admin'],function (){
     ## user Activation
     Route::post('userActivation','UsersController@userActivation')->name('userActivation');
 
+    ##################### service request ###################
+    Route::resource('services','ServicesRequestController');
+    Route::POST('delete_services','ServicesRequestController@delete')->name('delete_services');
+
+
+    ##################### reports ###################
+    Route::get('reports_index','ReportController@index')->name('reports_index');
+    Route::get('service_reports/{id}','ReportController@service')->name('service_reports');
+    Route::POST('delete_reports','ReportController@delete')->name('delete_reports');
 
 
 
