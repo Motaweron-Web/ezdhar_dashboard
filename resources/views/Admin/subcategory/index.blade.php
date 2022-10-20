@@ -3,7 +3,9 @@
 @section('title')
     {{($setting->title) ?? ''}}  | الاقسام الفرعية
 @endsection
-@section('page_name') الاقسام الفرعية @endsection
+@section('page_name')
+الاقسام الفرعية
+@endsection
 @section('content')
 
     <div class="row">

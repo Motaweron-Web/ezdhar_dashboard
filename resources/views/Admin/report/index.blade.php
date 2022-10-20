@@ -28,34 +28,6 @@
                                  <th class="min-w-50px rounded-end">العمليات</th>
                             </tr>
                             </thead>
-                                @foreach($reports as $report)
-                            <tbody>
-                            <tr>
-
-                                        <td>{{ $loop->iteration }}</td>
-                                        <td>{{ $report->user->first_name }}</td>
-                                        <td>{{ $report->reason }}</td>
-                                        <td>{{ $report->details }}</td>
-                                        <td><img alt="image" onclick="window.open(this.src)" class="avatar avatar-md rounded-circle" src="{{get_user_file($report->image)}}"></td>
-                                        <td><form method="get" action="{{ route('service_reports' , $report->user->id) }}">
-                                                @csrf
-                                                <button class="btn btn-pill btn-info-light" type="submit">
-                                                    <i class="fas fa-door-open"></i>
-                                                </button>
-                                            </form></td>
-                                        <td>{{ $report->created_at->format('m/d/Y') }}</td>
-                                        <td>
-                                            <form method="post" action="{{ route('delete_reports') }}">
-                                                @csrf
-                                                <input type="hidden" value="{{ $report->id }}" name="id">
-                                            <button class="btn btn-pill btn-danger-light" type="submit">
-                                                <i class="fas fa-trash"></i>
-                                            </button>
-                                            </form>
-                                        </td>
-                            </tr>
-                            </tbody>
-                                @endforeach
                         </table>
                     </div>
                 </div>
@@ -110,7 +82,21 @@
 @endsection
 @section('ajaxCalls')
 
-
+    <script>
+        var columns = [
+            {data: 'id', name: 'id'},
+            {data: 'user_id', name: 'user_id'},
+            {data: 'reason', name: 'reason'},
+            {data: 'details', name: 'details'},
+            {data: 'image', name: 'image'},
+            {data: 'ser', name: 'ser'},
+            {data: 'created_at', name: 'created_at'},
+            {data: 'action', name: 'action', orderable: false, searchable: false},
+        ]
+        showData('{{route('reports_index')}}', columns);
+        // Delete Using Ajax
+        deleteScript('{{route('delete_reports')}}');
+    </script>
 @endsection
 
 

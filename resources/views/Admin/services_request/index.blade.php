@@ -28,29 +28,6 @@
                                  <th class="min-w-50px rounded-end">العمليات</th>
                             </tr>
                             </thead>
-                                @foreach($services_request as $service)
-                            <tbody>
-                            <tr>
-
-                                        <td>{{ $loop->iteration }}</td>
-                                        <td>{{ $service->client->first_name }}</td>
-                                        <td>{{ $service->freelancer->first_name }}</td>
-                                        <td>{{ $service->subCategory->title_ar }}</td>
-                                        <td>{{ $service->price }}</td>
-                                        <td>{{ $service->details }}</td>
-                                        <td>{{ $service->created_at->format('m/d/Y') }}</td>
-                                        <td>
-                                            <form method="post" action="{{ route('delete_services') }}">
-                                                @csrf
-                                                <input type="hidden" value="{{ $service->id }}" name="id">
-                                            <button class="btn btn-pill btn-danger-light" type="submit">
-                                                <i class="fas fa-trash"></i>
-                                            </button>
-                                            </form>
-                                        </td>
-                            </tr>
-                            </tbody>
-                                @endforeach
                         </table>
                     </div>
                 </div>
@@ -104,8 +81,21 @@
     @include('Admin/layouts/myAjaxHelper')
 @endsection
 @section('ajaxCalls')
-
-
+    <script>
+        var columns = [
+            {data: 'id', name: 'id'},
+            {data: 'client_id', name: 'client_id'},
+            {data: 'freelancer_id', name: 'freelancer_id'},
+            {data: 'sub_category_id', name: 'sub_category_id'},
+            {data: 'price', name: 'price'},
+            {data: 'details', name: 'details'},
+            {data: 'created_at', name: 'created_at'},
+            {data: 'action', name: 'action', orderable: false, searchable: false},
+        ]
+        showData('{{route('services.index')}}', columns);
+        // Delete Using Ajax
+        deleteScript('{{route('delete_services')}}');
+    </script>
 @endsection
 
 
