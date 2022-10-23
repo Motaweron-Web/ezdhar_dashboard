@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Oct 10, 2022 at 09:26 AM
+-- Generation Time: Oct 23, 2022 at 01:03 PM
 -- Server version: 5.7.33
 -- PHP Version: 7.4.19
 
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `ezdhar`
+-- Database: `ezdhar_new`
 --
 
 -- --------------------------------------------------------
@@ -28,21 +28,21 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `admins` (
-  `id` bigint(20) UNSIGNED NOT NULL,
+  `id` bigint(20) NOT NULL,
   `name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `email` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `email` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `password` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `image` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `image` text COLLATE utf8mb4_unicode_ci,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `admins`
 --
 
 INSERT INTO `admins` (`id`, `name`, `email`, `password`, `image`, `created_at`, `updated_at`) VALUES
-(1, 'abdullah', 'admin@admin.com', '$2y$10$5pCi8dxb8j7LJ1ltepjV3uYGTT6erdletySQOVBGZXdaAE4LoQ97S', 'assets/uploads/admins/97001664796422.webp', '2022-09-19 11:49:05', '2022-10-03 11:27:02');
+(1, 'Abdallah Mahmoud', 'admin@admin.com', '$2y$10$5pCi8dxb8j7LJ1ltepjV3uYGTT6erdletySQOVBGZXdaAE4LoQ97S', 'assets/uploads/admins/58311666528638.webp', '2022-09-19 11:49:05', '2022-10-23 12:37:36');
 
 -- --------------------------------------------------------
 
@@ -52,13 +52,12 @@ INSERT INTO `admins` (`id`, `name`, `email`, `password`, `image`, `created_at`, 
 
 CREATE TABLE `advisor_categories` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `sub_category_id` bigint(20) UNSIGNED DEFAULT NULL,
-  `consultant_type_id` bigint(20) UNSIGNED DEFAULT NULL,
-  `user_id` bigint(20) UNSIGNED DEFAULT NULL,
+  `sub_category_id` bigint(20) UNSIGNED DEFAULT NULL COMMENT 'نوع الخدمه',
+  `consultant_type_id` bigint(20) UNSIGNED DEFAULT NULL COMMENT 'نوع الاستشاره',
+  `user_id` bigint(20) UNSIGNED DEFAULT NULL COMMENT 'مقدم الخدمه او المستشار',
   `desc_ar` text COLLATE utf8mb4_unicode_ci COMMENT 'تفاصيل هيقدمها في الخدمة زي مثلا مدة التنفيذ او شروط يجب ارسالها لتقديم الخدمة وتتعرض للعميل اللي هيشتري الخدمة',
   `desc_en` text COLLATE utf8mb4_unicode_ci,
   `price` double NOT NULL DEFAULT '0' COMMENT 'السعر اللي المستشار او مقدم الخدمة حابب ياخده من العميل',
-  `status` enum('new','pending','accepted','refused') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'new' COMMENT 'الادمن لازم يوافق علي ان مقدم الخدمة او المستشار هيسجل في القسم ده',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -67,13 +66,10 @@ CREATE TABLE `advisor_categories` (
 -- Dumping data for table `advisor_categories`
 --
 
-INSERT INTO `advisor_categories` (`id`, `sub_category_id`, `consultant_type_id`, `user_id`, `desc_ar`, `desc_en`, `price`, `status`, `created_at`, `updated_at`) VALUES
-(1, 2, NULL, 5, 'للاشتراك معي وشراء الخدمة يرجي ارسال كافة التفاصيل بشكل واضح وكذلك موعد التسليم المتوقع علما بان العمل يأخذ مدة حوالي 4 الي 8 ايام ', 'To subscribe with me and purchase the service, please send all the details clearly, as well as the expected delivery date, knowing that the work takes about 4 to 8 days', 40, 'accepted', '2022-08-30 15:09:19', '2022-08-30 15:09:19'),
-(2, 3, NULL, 5, 'اقدم هذه الخدمة تطوعا ومجانية بالكامل بدون اي رسوم , يتم التسليم خلال يوم او يومين عمل', 'I offer this service voluntarily and completely free of charge without any fees, delivery is done within one or two working days', 0, 'accepted', '2022-08-30 15:09:19', '2022-08-30 15:09:19'),
-(3, 5, NULL, 5, 'خدمتي الجديدة', 'my new service', 60, 'new', '2022-09-14 12:49:34', '2022-09-14 12:49:34'),
-(4, 6, NULL, 5, 'الجديدة', 'my new', 45, 'new', '2022-09-14 12:49:34', '2022-09-14 12:49:34'),
-(5, 5, NULL, 11, 'خدمتي الجديدة', 'my new service', 60, 'new', '2022-09-14 12:50:48', '2022-09-14 12:50:48'),
-(6, 6, NULL, 11, 'الجديدة', 'my new', 45, 'new', '2022-09-14 12:50:48', '2022-09-14 12:50:48');
+INSERT INTO `advisor_categories` (`id`, `sub_category_id`, `consultant_type_id`, `user_id`, `desc_ar`, `desc_en`, `price`, `created_at`, `updated_at`) VALUES
+(7, 2, NULL, 8, 'يرجي ارسال نظام المحاسبه الماليه وكل الوراق الخاصه بها', 'Please send the financial accounting system and all its paper', 90000, '2022-09-29 10:50:34', '2022-10-04 11:30:13'),
+(13, 3, NULL, 8, 'يرجي ارسال نظام المحاسبه الماليه وكل الوراق الخاصه بها', 'Please send the financial accounting system and all its papers', 3000, '2022-09-29 10:50:34', '2022-09-29 12:18:37'),
+(36, 2, NULL, 5, 'تفاصيل', 'details', 200, '2022-10-05 09:50:07', '2022-10-05 09:50:07');
 
 -- --------------------------------------------------------
 
@@ -86,7 +82,7 @@ CREATE TABLE `categories` (
   `title_ar` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `title_en` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `image` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `order_count` varchar(225) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `limit` int(11) NOT NULL COMMENT 'عدد الاوردرات المسموح بقبولها تبع هذا القسم',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -95,10 +91,9 @@ CREATE TABLE `categories` (
 -- Dumping data for table `categories`
 --
 
-INSERT INTO `categories` (`id`, `title_ar`, `title_en`, `image`, `order_count`, `created_at`, `updated_at`) VALUES
-(1, 'محاسبة', 'Accounting', 'storage/uploads/categories/1.png', '7', '2022-08-30 11:02:37', '2022-10-06 18:47:02'),
-(2, 'تشريع', 'Legal', 'storage/uploads/categories/2.png', '22', '2022-08-30 11:02:37', '2022-10-06 18:46:54'),
-(8, 'مشروع 2', 'project 2', NULL, '11', '2022-10-02 18:00:06', '2022-10-06 18:46:45');
+INSERT INTO `categories` (`id`, `title_ar`, `title_en`, `image`, `limit`, `created_at`, `updated_at`) VALUES
+(1, 'محاسبة', 'Accounting', 'storage/uploads/categories/1.png', 8, '2022-08-30 11:02:37', '2022-08-30 11:02:37'),
+(2, 'تشريع', 'Legal', 'storage/uploads/categories/2.png', 10, '2022-08-30 11:02:37', '2022-08-30 11:02:37');
 
 -- --------------------------------------------------------
 
@@ -4769,26 +4764,142 @@ CREATE TABLE `contact_us` (
 --
 
 INSERT INTO `contact_us` (`id`, `name`, `email`, `subject`, `message`, `created_at`, `updated_at`) VALUES
-(1, 'محمد خالد', 'ahmed@gmail.com', 'استفسار', 'اريد طريقة الدخول للتطبيق من فضلكم', '2022-09-14 11:34:38', '2022-09-14 11:34:38');
+(1, 'محمد خالد', 'ahmed@gmail.com', 'استفسار', 'اريد طريقة الدخول للتطبيق من فضلكم', '2022-09-14 11:34:38', '2022-09-14 11:34:38'),
+(2, 'rady', 'rady123@gmail.com', 'استفسار', 'اريد فهم التطبيق', '2022-09-20 19:11:33', '2022-09-20 19:11:33'),
+(3, 'rady', 'rady123@gmail.com', 'استفسار', 'اريد فهم التطبيق', '2022-09-20 19:13:59', '2022-09-20 19:13:59'),
+(4, 'rady', 'rady123@gmail.com', 'استفسار', 'اريد فهم التطبيق', '2022-09-21 07:31:52', '2022-09-21 07:31:52'),
+(5, 'محمد خالد', 'ahmed@gmail.com', 'استفسار', 'اريد طريقة الدخول للتطبيق من فضلكم', '2022-09-21 07:33:36', '2022-09-21 07:33:36'),
+(6, 'mohamed', 'mohamed123@gmail.com', 'استشاره', 'اريد فهم التطبيق', '2022-09-21 07:59:45', '2022-09-21 07:59:45'),
+(7, 'mohamed', 'mohamed123@gmail.com', 'استشاره', 'اريد فهم التطبيق', '2022-09-21 10:01:30', '2022-09-21 10:01:30'),
+(8, 'أحمد يحيى', 'yehia@gmail.com', 'ازدهار', 'عطل فنى', '2022-09-21 10:46:42', '2022-09-21 10:46:42'),
+(9, 'يحيى', 'yehia@gmail.com', 'ezdehar', 'error', '2022-09-21 10:48:29', '2022-09-21 10:48:29'),
+(10, 'Yehiaaa', 'yehia@gmail.com', 'test success', 'is done ?', '2022-09-21 10:54:19', '2022-09-21 10:54:19'),
+(11, 'yehia', 'yehia@gmail.com', 'test success 2', 'color is green ?', '2022-09-21 10:56:05', '2022-09-21 10:56:05'),
+(12, 'yehia', 'yehia@gmail.com', 'one more time 😜', 'is all is done ??', '2022-09-21 10:57:16', '2022-09-21 10:57:16'),
+(13, 'hoda', 'hoda@gmail.com', 'استشاره', 'اريد فهم التطبيق', '2022-09-21 14:02:21', '2022-09-21 14:02:21'),
+(14, 'mohamed', 'yyy@fff', 'استشاره', 'اريد فهم التطبيق', '2022-09-21 14:05:11', '2022-09-21 14:05:11'),
+(15, 'mohamed', 'ppppp@p', 'استشاره', 'اريد فهم التطبيق', '2022-09-21 14:47:14', '2022-09-21 14:47:14'),
+(16, 'vnte', 'ej4@e6je', '3j3', '3D he', '2022-09-21 14:47:50', '2022-09-21 14:47:50'),
+(17, 'eme', 'rjetn@d6ne', '2je6e6n', 'd6m', '2022-09-21 14:51:34', '2022-09-21 14:51:34'),
+(18, 'mohamed', 'mohamed123@gmail.com', 'استشاره', 'اريد فهم التطبيق', '2022-10-03 09:06:34', '2022-10-03 09:06:34');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `feasibility_study`
+-- Table structure for table `feasibilities`
 --
 
-CREATE TABLE `feasibility_study` (
-  `id` bigint(11) UNSIGNED NOT NULL,
-  `name` varchar(191) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `image` varchar(191) COLLATE utf8_unicode_ci DEFAULT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+CREATE TABLE `feasibilities` (
+  `id` bigint(20) NOT NULL,
+  `feasibility_type_id` bigint(20) UNSIGNED NOT NULL,
+  `img` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `project_name` varchar(200) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `ownership_rate` int(11) NOT NULL,
+  `note` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'no notes',
+  `details` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `show` tinyint(1) NOT NULL COMMENT 'اذا كنت تريد عرض مشروعك في الاستثمار',
+  `user_id` bigint(20) UNSIGNED NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data for table `feasibility_study`
+-- Dumping data for table `feasibilities`
 --
 
-INSERT INTO `feasibility_study` (`id`, `name`, `image`) VALUES
-(6, 'test', NULL);
+INSERT INTO `feasibilities` (`id`, `feasibility_type_id`, `img`, `project_name`, `ownership_rate`, `note`, `details`, `show`, `user_id`, `created_at`, `updated_at`) VALUES
+(5, 1, '20220921124305.png', 'استثمار عقاري', 5, 'مشروع جيد', 'مشروع جيد للغايه وارباحه مهوله وتم حساب مواد البناء وقد تصل الي 10 مليون جنيه', 1, 5, '2022-09-21 12:43:05', '2022-09-21 12:43:05'),
+(7, 1, '20220921124305.png', 'استثمار عقاري', 5, 'مشروع جيد', 'مشروع جيد للغايه وارباحه مهوله وتم حساب مواد البناء وقد تصل الي 10 مليون جنيه', 1, 5, '2022-09-21 12:43:05', '2022-09-21 12:43:05');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `feasibilities_categories`
+--
+
+CREATE TABLE `feasibilities_categories` (
+  `id` bigint(20) NOT NULL,
+  `feasibility_id` bigint(20) UNSIGNED NOT NULL,
+  `details` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `price` double NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `feasibilities_categories`
+--
+
+INSERT INTO `feasibilities_categories` (`id`, `feasibility_id`, `details`, `price`, `created_at`, `updated_at`) VALUES
+(52, 34, 'انشاء', 5000, '2022-10-23 09:17:36', '2022-10-23 09:17:36'),
+(53, 34, 'تشطيب', 7000, '2022-10-23 09:17:36', '2022-10-23 09:17:36'),
+(54, 34, 'نجاره', 1000, '2022-10-23 09:17:36', '2022-10-23 09:17:36');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `feasibilities_sub_categories`
+--
+
+CREATE TABLE `feasibilities_sub_categories` (
+  `id` bigint(20) NOT NULL,
+  `feasibility_category_id` bigint(20) UNSIGNED NOT NULL,
+  `details` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `price` double NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `feasibilities_sub_categories`
+--
+
+INSERT INTO `feasibilities_sub_categories` (`id`, `feasibility_category_id`, `details`, `price`, `created_at`, `updated_at`) VALUES
+(13, 52, 'vvvvv', 100, '2022-10-23 09:17:36', '2022-10-23 09:17:36');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `feasibilities_sub_sub_categories`
+--
+
+CREATE TABLE `feasibilities_sub_sub_categories` (
+  `id` bigint(20) NOT NULL,
+  `feasibility_sub_category_id` bigint(20) UNSIGNED NOT NULL,
+  `price` double NOT NULL,
+  `details` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `feasibilities_sub_sub_categories`
+--
+
+INSERT INTO `feasibilities_sub_sub_categories` (`id`, `feasibility_sub_category_id`, `price`, `details`, `created_at`, `updated_at`) VALUES
+(1, 13, 444, 'gggg', '2022-10-23 09:17:36', '2022-10-23 09:17:36');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `feasibility_types`
+--
+
+CREATE TABLE `feasibility_types` (
+  `id` bigint(20) NOT NULL,
+  `type` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `img` text COLLATE utf8mb4_unicode_ci,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `feasibility_types`
+--
+
+INSERT INTO `feasibility_types` (`id`, `type`, `img`, `created_at`, `updated_at`) VALUES
+(1, 'محاسبة', 'assets/uploads/feasibility_type/48161666526169.webp', '2022-09-21 12:24:53', '2022-10-23 11:56:09'),
+(2, 'محاسبة', 'assets/uploads/feasibility_type/42681666526158.webp', '2022-09-22 07:57:56', '2022-10-23 11:55:58');
 
 -- --------------------------------------------------------
 
@@ -4883,8 +4994,9 @@ CREATE TABLE `orders` (
   `advisor_or_user_id` bigint(20) DEFAULT NULL,
   `sub_category_id` bigint(20) DEFAULT NULL,
   `consultation_type_id` bigint(20) DEFAULT NULL,
-  `status` enum('new','accepted','refused') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'new' COMMENT 'مقدم الخدمة او المستشار المفروض يوافق علي الطلب',
+  `status` enum('new','accepted','refused','completed') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'new' COMMENT 'مقدم الخدمة او المستشار المفروض يوافق علي الطلب',
   `note` text COLLATE utf8mb4_unicode_ci,
+  `img` text COLLATE utf8mb4_unicode_ci,
   `payment_status` enum('unpaid','paid') COLLATE utf8mb4_unicode_ci DEFAULT 'unpaid',
   `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP
@@ -4894,58 +5006,93 @@ CREATE TABLE `orders` (
 -- Dumping data for table `orders`
 --
 
-INSERT INTO `orders` (`id`, `transaction_id`, `user_id`, `advisor_or_user_id`, `sub_category_id`, `consultation_type_id`, `status`, `note`, `payment_status`, `created_at`, `updated_at`) VALUES
-(17, 'chg_TS497593231989', 11, 5, 3, NULL, 'accepted', NULL, 'paid', '2022-09-12 08:48:54', '2022-09-12 08:48:54'),
-(18, 'chg_TS168075040650', 11, 5, 3, NULL, 'accepted', NULL, 'paid', '2022-09-12 08:49:14', '2022-09-12 08:49:14'),
-(19, 'chg_TS043420221150Pn231209902', 11, 5, 2, NULL, 'accepted', NULL, 'unpaid', '2022-09-12 08:50:57', '2022-09-12 08:50:57'),
-(20, 'chg_TS101531623102', 11, 5, 3, NULL, 'accepted', NULL, 'paid', '2022-09-12 10:37:39', '2022-09-12 10:37:39'),
-(21, 'chg_TS303169983098', 11, 5, 3, NULL, 'accepted', NULL, 'paid', '2022-09-12 14:12:34', '2022-09-12 14:12:34'),
-(22, 'chg_TS041320221716g1N31209165', 16, 5, 2, NULL, 'accepted', NULL, 'unpaid', '2022-09-12 14:16:14', '2022-09-12 14:16:14'),
-(23, 'chg_TS012420221716Bb921209818', 16, 5, 2, NULL, 'accepted', NULL, 'unpaid', '2022-09-12 14:16:26', '2022-09-12 14:16:26'),
-(24, 'chg_TS014220221738c5X11209997', 16, 5, 2, NULL, 'accepted', NULL, 'unpaid', '2022-09-12 14:38:44', '2022-09-12 14:38:44'),
-(25, 'chg_TS031120221747a9TP1209334', 16, 5, 2, NULL, 'accepted', NULL, 'unpaid', '2022-09-12 14:47:12', '2022-09-12 14:47:12'),
-(26, 'chg_TS063820221807Jq511209997', 16, 5, 2, NULL, 'accepted', NULL, 'unpaid', '2022-09-12 15:07:40', '2022-09-12 15:07:40'),
-(27, 'chg_TS044220221819Rw2s1209428', 16, 5, 2, NULL, 'accepted', NULL, 'unpaid', '2022-09-12 15:19:43', '2022-09-12 15:19:43'),
-(28, 'chg_TS071420221820Tj291209445', 16, 5, 2, NULL, 'accepted', NULL, 'unpaid', '2022-09-12 15:20:15', '2022-09-12 15:20:15'),
-(29, 'chg_TS012620221135j4H81309624', 16, 5, 2, NULL, 'accepted', NULL, 'unpaid', '2022-09-13 08:35:27', '2022-09-13 08:35:27'),
-(30, 'chg_TS043820221141p2H11309833', 16, 5, 2, NULL, 'accepted', NULL, 'unpaid', '2022-09-13 08:41:39', '2022-09-13 08:41:39'),
-(31, 'chg_TS013920221203Xa3g1309249', 16, 5, 2, NULL, 'accepted', NULL, 'unpaid', '2022-09-13 09:03:40', '2022-09-13 09:03:40'),
-(32, 'chg_TS015220221203b8FD1309002', 16, 5, 2, NULL, 'accepted', NULL, 'unpaid', '2022-09-13 09:03:53', '2022-09-13 09:03:53'),
-(33, 'chg_TS020520221212w8X11309171', 16, 5, 2, NULL, 'accepted', NULL, 'paid', '2022-09-13 09:12:06', '2022-09-13 09:13:40'),
-(34, 'chg_TS014620221710h9PL1309176', 16, 5, 2, NULL, 'accepted', NULL, 'paid', '2022-09-13 14:10:51', '2022-09-13 14:21:08'),
-(35, 'chg_TS020020221731j9P31309418', 16, 5, 2, NULL, 'accepted', NULL, 'paid', '2022-09-13 14:31:06', '2022-09-13 14:32:45'),
-(36, 'chg_TS072020221737y4HM1309673', 16, 5, 2, NULL, 'accepted', NULL, 'paid', '2022-09-13 14:37:26', '2022-09-13 14:38:37'),
-(37, 'chg_TS064220221747Oa8e1309871', 16, 5, 2, NULL, 'accepted', NULL, 'unpaid', '2022-09-13 14:47:49', '2022-09-13 14:47:49'),
-(38, 'chg_TS062420221749Mw211309245', 16, 5, 2, NULL, 'accepted', NULL, 'paid', '2022-09-13 14:49:30', '2022-09-13 14:50:32'),
-(39, 'chg_TS054120221754j4FJ1309566', 16, 5, 2, NULL, 'accepted', NULL, 'paid', '2022-09-13 14:54:47', '2022-09-13 14:55:59'),
-(40, 'chg_TS456380855620', 16, 5, 3, NULL, 'accepted', NULL, 'paid', '2022-09-13 14:57:16', '2022-09-13 14:57:16'),
-(41, 'chg_TS966341066109', 16, 5, 3, NULL, 'accepted', NULL, 'paid', '2022-09-13 14:57:28', '2022-09-13 14:57:28'),
-(42, 'chg_TS177360914812', 16, 5, 3, NULL, 'accepted', NULL, 'paid', '2022-09-13 14:58:07', '2022-09-13 14:58:07'),
-(43, 'chg_TS353321127567', 16, 5, 3, NULL, 'accepted', NULL, 'paid', '2022-09-13 14:59:27', '2022-09-13 14:59:27'),
-(44, 'chg_TS626179380132', 16, 5, 3, NULL, 'accepted', NULL, 'paid', '2022-09-13 15:02:04', '2022-09-13 15:02:04'),
-(45, 'chg_TS801275170123', 16, 5, 3, NULL, 'accepted', NULL, 'paid', '2022-09-13 15:02:06', '2022-09-13 15:02:06'),
-(46, 'chg_TS025420221806Pu151309313', 16, 5, 2, NULL, 'accepted', NULL, 'unpaid', '2022-09-13 15:07:00', '2022-09-13 15:07:00'),
-(47, 'chg_TS655171377313', 16, 5, 3, NULL, 'accepted', NULL, 'paid', '2022-09-13 15:11:49', '2022-09-13 15:11:49'),
-(48, 'chg_TS663135874303', 16, 5, 3, NULL, 'accepted', NULL, 'paid', '2022-09-13 15:11:59', '2022-09-13 15:11:59'),
-(49, 'chg_TS827682597058', 16, 5, 3, NULL, 'accepted', NULL, 'paid', '2022-09-13 15:12:31', '2022-09-13 15:12:31'),
-(50, 'chg_TS691731233707', 16, 5, 3, NULL, 'accepted', NULL, 'paid', '2022-09-13 15:14:22', '2022-09-13 15:14:22'),
-(51, 'chg_TS419528782656', 16, 5, 3, NULL, 'accepted', NULL, 'paid', '2022-09-13 15:17:50', '2022-09-13 15:17:50'),
-(52, 'chg_TS239503322487', 16, 5, 3, NULL, 'accepted', NULL, 'paid', '2022-09-13 15:20:11', '2022-09-13 15:20:11'),
-(53, 'chg_TS264680094987', 16, 5, 3, NULL, 'accepted', NULL, 'paid', '2022-09-13 15:23:12', '2022-09-13 15:23:12'),
-(54, 'chg_TS784062864878', 16, 5, 3, NULL, 'accepted', NULL, 'paid', '2022-09-13 15:27:39', '2022-09-13 15:27:39'),
-(55, 'chg_TS630030272281', 16, 5, 3, NULL, 'accepted', NULL, 'paid', '2022-09-13 15:32:05', '2022-09-13 15:32:05'),
-(56, 'chg_TS010020221839m2ZH1309535', 16, 5, 2, NULL, 'accepted', NULL, 'unpaid', '2022-09-13 15:39:07', '2022-09-13 15:39:07'),
-(57, 'chg_TS119878052366', 16, 5, 3, NULL, 'accepted', NULL, 'paid', '2022-09-13 15:40:29', '2022-09-13 15:40:29'),
-(58, 'chg_TS600111234714', 11, 5, 3, NULL, 'accepted', NULL, 'paid', '2022-09-14 13:17:09', '2022-09-14 13:17:09'),
-(59, 'chg_TS657513974448', 11, 5, 3, NULL, 'accepted', NULL, 'paid', '2022-09-19 12:59:01', '2022-09-19 12:59:01'),
-(60, NULL, 11, 5, 3, NULL, 'accepted', NULL, 'unpaid', '2022-09-19 13:03:57', '2022-09-19 13:03:57'),
-(61, NULL, 11, 5, 3, NULL, 'accepted', NULL, 'unpaid', '2022-09-19 13:05:03', '2022-09-19 13:05:03'),
-(62, NULL, 11, 5, 3, NULL, 'accepted', NULL, 'paid', '2022-09-19 13:11:32', '2022-09-19 13:11:32'),
-(63, NULL, 11, 5, 3, NULL, 'accepted', NULL, 'paid', '2022-09-19 13:11:52', '2022-09-19 13:11:52'),
-(64, NULL, 11, 5, 3, NULL, 'accepted', NULL, 'paid', '2022-09-19 13:13:23', '2022-09-19 13:13:23'),
-(65, NULL, 11, 5, 3, NULL, 'accepted', NULL, 'paid', '2022-09-19 13:13:38', '2022-09-19 13:13:38'),
-(66, NULL, 11, 5, 3, NULL, 'accepted', NULL, 'paid', '2022-09-19 13:15:38', '2022-09-19 13:15:38'),
-(67, NULL, 11, 5, 3, NULL, 'accepted', NULL, 'paid', '2022-09-19 14:38:37', '2022-09-19 14:38:37');
+INSERT INTO `orders` (`id`, `transaction_id`, `user_id`, `advisor_or_user_id`, `sub_category_id`, `consultation_type_id`, `status`, `note`, `img`, `payment_status`, `created_at`, `updated_at`) VALUES
+(78, NULL, 11, 5, 3, NULL, 'accepted', 'عايزك ترسمني يا رايق بالله عليك', '20220926124051.jpg', 'paid', '2022-09-26 12:40:51', '2022-10-02 09:24:01'),
+(79, NULL, 11, 5, 3, NULL, 'accepted', 'عايزك ترسمني يا رايق بالله عليك', '20220928075141.png', 'paid', '2022-09-28 07:51:41', '2022-10-02 08:24:06'),
+(80, NULL, 11, 5, 3, NULL, 'accepted', 'عايزك ترسمني يا رايق بالله عليك', '20220928075214.png', 'paid', '2022-09-28 07:52:14', '2022-10-02 08:29:28'),
+(81, NULL, 11, 5, 3, NULL, 'accepted', 'عايزك ترسمني يا رايق بالله عليك', '20220928105857.png', 'paid', '2022-09-28 10:58:57', '2022-10-02 08:06:44'),
+(82, NULL, 8, 5, 3, NULL, 'accepted', 'عايزك ترسمني يا رايق بالله عليك', '20220928111120.jpg', 'paid', '2022-09-28 11:11:20', '2022-10-02 08:25:35'),
+(83, NULL, 8, 5, 3, NULL, 'accepted', 'عايزك ترسمني يا رايق بالله عليك', '20220928111734.jpg', 'paid', '2022-09-28 11:17:34', '2022-09-29 09:47:21'),
+(84, NULL, 8, 5, 3, NULL, 'accepted', 'عايزك ترسمني يا رايق بالله عليك', '20220928111803.png', 'paid', '2022-09-28 11:18:03', '2022-10-02 08:12:32'),
+(85, NULL, 8, 5, 3, NULL, 'accepted', 'عايزك ترسمني يا رايق بالله عليك', '20220928111809.png', 'paid', '2022-09-28 11:18:09', '2022-10-02 11:13:51'),
+(86, NULL, 8, 5, 3, NULL, 'refused', 'عايزك ترسمني يا رايق بالله عليك', '20220928111815.png', 'paid', '2022-09-28 11:18:15', '2022-10-02 11:59:16'),
+(87, NULL, 8, 5, 3, NULL, 'refused', 'عايزك ترسمني يا رايق بالله عليك', '20221002092003.jpg', 'paid', '2022-10-02 09:20:03', '2022-10-02 09:35:29'),
+(88, NULL, 8, 5, 4, NULL, 'refused', 'عايزك ترسمني يا رايق بالله عليك', '20221002112331.jpg', 'paid', '2022-10-02 11:23:31', '2022-10-05 09:58:07'),
+(89, NULL, 9, 5, 4, NULL, 'new', 'عايزك ترسمني يا رايق بالله عليك', '20221002112349.jpg', 'paid', '2022-10-02 11:23:49', '2022-10-02 11:23:49'),
+(90, NULL, 8, 5, 4, NULL, 'new', NULL, NULL, 'paid', '2022-10-09 14:00:44', '2022-10-09 14:00:44'),
+(91, NULL, 8, 5, 4, NULL, 'new', 'عايزك ترسمني يا رايق بالله عليك', NULL, 'paid', '2022-10-09 14:00:50', '2022-10-09 14:00:50'),
+(92, NULL, 8, 5, 4, NULL, 'new', 'عايزك ترسمني يا رايق بالله عليك', NULL, 'paid', '2022-10-16 08:14:24', '2022-10-16 08:14:24'),
+(93, NULL, 8, 5, 4, NULL, 'new', 'عايزك ترسمني يا رايق بالله عليك', NULL, 'paid', '2022-10-16 08:15:36', '2022-10-16 08:15:36'),
+(94, NULL, 8, 5, 4, NULL, 'new', 'عايزك ترسمني يا رايق بالله عليك', NULL, 'paid', '2022-10-16 08:16:22', '2022-10-16 08:16:22'),
+(95, NULL, 8, 5, 4, NULL, 'new', 'عايزك ترسمني يا رايق بالله عليك', NULL, 'paid', '2022-10-16 08:17:39', '2022-10-16 08:17:39'),
+(96, NULL, 8, 5, 4, NULL, 'new', 'عايزك ترسمني يا رايق بالله عليك', NULL, 'paid', '2022-10-16 08:18:33', '2022-10-16 08:18:33'),
+(97, NULL, 8, 5, 4, NULL, 'new', 'عايزك ترسمني يا رايق بالله عليك', NULL, 'paid', '2022-10-16 08:21:49', '2022-10-16 08:21:49'),
+(98, NULL, 8, 5, 4, NULL, 'new', 'عايزك ترسمني يا رايق بالله عليك', NULL, 'paid', '2022-10-16 08:30:07', '2022-10-16 08:30:07'),
+(99, NULL, 8, 5, 4, NULL, 'new', 'عايزك ترسمني يا رايق بالله عليك', NULL, 'paid', '2022-10-16 08:31:25', '2022-10-16 08:31:25'),
+(100, NULL, 8, 5, 4, NULL, 'new', 'عايزك ترسمني يا رايق بالله عليك', NULL, 'paid', '2022-10-16 08:31:37', '2022-10-16 08:31:37'),
+(101, NULL, 8, 5, 4, NULL, 'new', 'عايزك ترسمني يا رايق بالله عليك', NULL, 'paid', '2022-10-16 08:31:41', '2022-10-16 08:31:41'),
+(102, NULL, 8, 5, 4, NULL, 'new', 'عايزك ترسمني يا رايق بالله عليك', NULL, 'paid', '2022-10-16 08:32:08', '2022-10-16 08:32:08'),
+(103, NULL, 8, 5, 4, NULL, 'new', 'عايزك ترسمني يا رايق بالله عليك', NULL, 'paid', '2022-10-16 08:38:20', '2022-10-16 08:38:20'),
+(104, NULL, 8, 5, 4, NULL, 'new', 'عايزك ترسمني يا رايق بالله عليك', NULL, 'paid', '2022-10-16 08:39:56', '2022-10-16 08:39:56'),
+(105, NULL, 8, 5, 4, NULL, 'new', 'عايزك ترسمني يا رايق بالله عليك', NULL, 'paid', '2022-10-16 08:46:47', '2022-10-16 08:46:47'),
+(106, NULL, 8, 5, 4, NULL, 'new', 'عايزك ترسمني يا رايق بالله عليك', NULL, 'paid', '2022-10-16 08:47:55', '2022-10-16 08:47:55'),
+(107, NULL, 8, 5, 4, NULL, 'new', 'عايزك ترسمني يا رايق بالله عليك', NULL, 'paid', '2022-10-16 08:48:22', '2022-10-16 08:48:22'),
+(108, NULL, 8, 5, 4, NULL, 'new', 'عايزك ترسمني يا رايق بالله عليك', NULL, 'paid', '2022-10-16 09:01:00', '2022-10-16 09:01:00'),
+(109, NULL, 8, 5, 4, NULL, 'new', 'عايزك ترسمني يا رايق بالله عليك', NULL, 'paid', '2022-10-16 09:01:18', '2022-10-16 09:01:18'),
+(110, NULL, 8, 5, 4, NULL, 'new', 'عايزك ترسمني يا رايق بالله عليك', NULL, 'paid', '2022-10-16 09:03:02', '2022-10-16 09:03:02'),
+(111, NULL, 8, 5, 4, NULL, 'new', 'عايزك ترسمني يا رايق بالله عليك', NULL, 'paid', '2022-10-16 09:09:39', '2022-10-16 09:09:39'),
+(112, NULL, 8, 5, 4, NULL, 'new', 'عايزك ترسمني يا رايق بالله عليك', NULL, 'paid', '2022-10-16 09:09:58', '2022-10-16 09:09:58'),
+(113, NULL, 8, 5, 4, NULL, 'new', 'عايزك ترسمني يا رايق بالله عليك', NULL, 'paid', '2022-10-16 09:12:05', '2022-10-16 09:12:05'),
+(114, NULL, 8, 5, 4, NULL, 'new', 'عايزك ترسمني يا رايق بالله عليك', NULL, 'paid', '2022-10-16 09:14:56', '2022-10-16 09:14:56'),
+(115, NULL, 8, 5, 4, NULL, 'new', 'عايزك ترسمني يا رايق بالله عليك', NULL, 'paid', '2022-10-16 09:15:50', '2022-10-16 09:15:50'),
+(116, NULL, 8, 8, 4, NULL, 'new', 'عايزك ترسمني يا رايق بالله عليك', NULL, 'paid', '2022-10-16 09:17:35', '2022-10-16 09:17:35'),
+(117, NULL, 8, 8, 4, NULL, 'new', 'عايزك ترسمني يا رايق بالله عليك', NULL, 'paid', '2022-10-16 09:19:06', '2022-10-16 09:19:06'),
+(118, NULL, 16, 8, 4, NULL, 'new', 'عايزك ترسمني يا رايق بالله عليك', NULL, 'paid', '2022-10-16 09:25:10', '2022-10-16 09:25:10'),
+(119, NULL, 16, 8, 4, NULL, 'new', 'عايزك ترسمني يا رايق بالله عليك', NULL, 'paid', '2022-10-16 09:26:34', '2022-10-16 09:26:34'),
+(120, NULL, 16, 8, 4, NULL, 'new', 'عايزك ترسمني يا رايق بالله عليك', NULL, 'paid', '2022-10-16 09:26:54', '2022-10-16 09:26:54'),
+(121, NULL, 16, 28, 4, NULL, 'new', 'عايزك ترسمني يا رايق بالله عليك', NULL, 'paid', '2022-10-16 09:28:39', '2022-10-16 09:28:39'),
+(122, NULL, 16, 28, 4, NULL, 'new', 'عايزك ترسمني يا رايق بالله عليك', NULL, 'paid', '2022-10-16 09:30:36', '2022-10-16 09:30:36'),
+(123, NULL, 16, 28, 4, NULL, 'new', 'عايزك ترسمني يا رايق بالله عليك', NULL, 'paid', '2022-10-16 09:30:50', '2022-10-16 09:30:50'),
+(124, NULL, 16, 28, 4, NULL, 'new', 'عايزك ترسمني يا رايق بالله عليك', NULL, 'paid', '2022-10-16 09:31:32', '2022-10-16 09:31:32'),
+(125, NULL, 16, 28, 4, NULL, 'new', 'عايزك ترسمني يا رايق بالله عليك', NULL, 'paid', '2022-10-16 09:33:29', '2022-10-16 09:33:29'),
+(126, NULL, 16, 28, 4, NULL, 'new', 'عايزك ترسمني يا رايق بالله عليك', NULL, 'paid', '2022-10-16 09:35:16', '2022-10-16 09:35:16'),
+(127, NULL, 16, 28, 4, NULL, 'new', 'عايزك ترسمني يا رايق بالله عليك', NULL, 'paid', '2022-10-16 09:35:50', '2022-10-16 09:35:50'),
+(128, NULL, 16, 28, 4, NULL, 'new', 'عايزك ترسمني يا رايق بالله عليك', NULL, 'paid', '2022-10-16 09:36:27', '2022-10-16 09:36:27'),
+(129, NULL, 16, 28, 4, NULL, 'new', 'عايزك ترسمني يا رايق بالله عليك', NULL, 'paid', '2022-10-16 09:38:04', '2022-10-16 09:38:04'),
+(130, NULL, 16, 28, 4, NULL, 'new', 'عايزك ترسمني يا رايق بالله عليك', NULL, 'paid', '2022-10-16 09:38:49', '2022-10-16 09:38:49'),
+(131, NULL, 16, 28, 4, NULL, 'new', 'عايزك ترسمني يا رايق بالله عليك', NULL, 'paid', '2022-10-16 09:39:49', '2022-10-16 09:39:49'),
+(132, NULL, 16, 28, 4, NULL, 'new', 'عايزك ترسمني يا رايق بالله عليك', NULL, 'paid', '2022-10-16 09:41:19', '2022-10-16 09:41:19'),
+(133, NULL, 16, 28, 4, NULL, 'new', 'عايزك ترسمني يا رايق بالله عليك', NULL, 'paid', '2022-10-16 09:42:52', '2022-10-16 09:42:52'),
+(134, NULL, 16, 28, 4, NULL, 'new', 'عايزك ترسمني يا رايق بالله عليك', NULL, 'paid', '2022-10-16 09:43:20', '2022-10-16 09:43:20'),
+(135, NULL, 16, 28, 4, NULL, 'new', 'عايزك ترسمني يا رايق بالله عليك', NULL, 'paid', '2022-10-16 09:44:00', '2022-10-16 09:44:00'),
+(136, NULL, 16, 28, 4, NULL, 'new', 'عايزك ترسمني يا رايق بالله عليك', NULL, 'paid', '2022-10-16 09:44:33', '2022-10-16 09:44:33'),
+(137, NULL, 16, 28, 4, NULL, 'new', 'عايزك ترسمني يا رايق بالله عليك', NULL, 'paid', '2022-10-16 09:44:49', '2022-10-16 09:44:49'),
+(138, NULL, 16, 28, 4, NULL, 'new', 'عايزك ترسمني يا رايق بالله عليك', NULL, 'paid', '2022-10-16 09:48:37', '2022-10-16 09:48:37');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `order_reports`
+--
+
+CREATE TABLE `order_reports` (
+  `id` bigint(20) NOT NULL,
+  `user_id` bigint(20) UNSIGNED NOT NULL,
+  `provider_id` bigint(20) UNSIGNED NOT NULL,
+  `order_id` bigint(20) UNSIGNED NOT NULL,
+  `reason` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `details` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `img` text COLLATE utf8mb4_unicode_ci,
+  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `order_reports`
+--
+
+INSERT INTO `order_reports` (`id`, `user_id`, `provider_id`, `order_id`, `reason`, `details`, `img`, `created_at`, `updated_at`) VALUES
+(1, 11, 5, 78, 'reason', 'ddd', NULL, '2022-10-23 11:02:14', NULL);
 
 -- --------------------------------------------------------
 
@@ -4989,7 +5136,15 @@ INSERT INTO `phone_tokens` (`id`, `user_id`, `token`, `type`, `created_at`, `upd
 (10, 13, 'eGqdtGEfRfWgz0fkfHyfP8:APA91bEWuyjLbtFRt3xV7dpM-PeUdYQSfozlSv5WFkI0kEDnHb7fAED8G_3b9TpFC6lBQEvXhCIN6KptNyXLEG0btzt9y1dd0jNm3MMAVAHoC8jfGdpo-l51RxYrCh_SnuwtHr65pNlt', 'android', '2022-08-30 12:12:44', '2022-08-30 12:12:44'),
 (11, 5, 'eGqdtGEfRfWgz0fkfHyfP8:APA91bEWuyjLbtFRt3xV7dpM-PeUdYQSfozlSv5WFkI0kEDnHb7fAED8G_3b9TpFC6lBQEvXhCIN6KptNyXLEG0btzt9y1dd0jNm3MMAVAHoC8jfGdpo-l51RxYrCh_SnuwtHr65pNlt', 'android', '2022-08-31 14:31:37', '2022-08-31 14:31:37'),
 (12, 10, 'cETrwX-jQAuwQRmDSB_3mC:APA91bGdLifQyKeae38XdKEc3FtOiURpoRuqoUNraLdZuWhg0U1zBKbBGXM1XfJA0yoGWv9d65bMTgxBPbEE8lmZesPYGBcDyJqLt7IBbQ2cq7rTE2YHL_aveEDlXNwAxQF_cZNYQ7wt', 'android', '2022-09-02 08:25:12', '2022-09-02 08:25:12'),
-(13, 16, 'eGqdtGEfRfWgz0fkfHyfP8:APA91bEWuyjLbtFRt3xV7dpM-PeUdYQSfozlSv5WFkI0kEDnHb7fAED8G_3b9TpFC6lBQEvXhCIN6KptNyXLEG0btzt9y1dd0jNm3MMAVAHoC8jfGdpo-l51RxYrCh_SnuwtHr65pNlt', 'android', '2022-09-12 12:28:04', '2022-09-12 12:28:04');
+(13, 16, 'eGqdtGEfRfWgz0fkfHyfP8:APA91bEWuyjLbtFRt3xV7dpM-PeUdYQSfozlSv5WFkI0kEDnHb7fAED8G_3b9TpFC6lBQEvXhCIN6KptNyXLEG0btzt9y1dd0jNm3MMAVAHoC8jfGdpo-l51RxYrCh_SnuwtHr65pNlt', 'android', '2022-09-12 12:28:04', '2022-09-12 12:28:04'),
+(14, 5, 'ce5qSAYlSAi0pHOJzVdFsP:APA91bGnqhe57C-3Rqec0jhFn6AmsONQ7dn5svOKNAOqOx68nbQ8LUsqN3RmXvzJVYbsJSuLC0pNlYQXSz0NnmUfeOMpO7Bz3W9r7wjkp7xj3bs-GZVCHp3BR-3v5ZbHC9aulDXtf5LR', 'android', '2022-09-20 19:29:58', '2022-09-20 19:29:58'),
+(15, 5, 'dLerOh-7RquxNjESCiT12M:APA91bFZV9wxKlcrV2sxThABxl07mrwSOuesS2Wvu2SWGzY1a0HAThQr0-f5wShSP61XrylOErDTaXizGrtC7JCZQq4ew_KvG8dsin84GsjdoJ9tbQffRLYIMQZiNIAOiR3hxlolKaU8', 'android', '2022-09-21 08:57:28', '2022-09-21 08:57:28'),
+(16, 5, 'd9gjgatEDCLDhh14F1YxMQ:APA91bHFOv37W7rj-qHUo3W5TcuUiRjF_9GwEK57JPBHynQEUcw2-g1rpPiJP5F8VHJ2dNU2ZYtu0BBSmDlG5vFFCZyc6rlT0D_BmfqFtV0QbT8w_qFNvMJs4pkLoIY3MUb_g8MuWppI', 'android', '2022-09-21 12:24:21', '2022-09-21 12:24:21'),
+(17, 23, 'd9gjgatEDCLDhh14F1YxMQ:APA91bHFOv37W7rj-qHUo3W5TcuUiRjF_9GwEK57JPBHynQEUcw2-g1rpPiJP5F8VHJ2dNU2ZYtu0BBSmDlG5vFFCZyc6rlT0D_BmfqFtV0QbT8w_qFNvMJs4pkLoIY3MUb_g8MuWppI', 'android', '2022-09-25 11:16:53', '2022-09-25 11:16:53'),
+(18, 5, 'dVIwJTv1SVCcNNIzYVGpJg:APA91bE2VVG4z5-OxQOrlvz60_y9nEEYUexSxezfyhNBNcCWYtnhWt0nqNXJ682p4pgleWiqLGLE7Rr6oguxcbTfnHZBsh_CbyqbKROMJQk_8SI11H3sN3tg36gS5dG0sSZchmW3rdBe', 'android', '2022-09-26 14:24:26', '2022-09-26 14:24:26'),
+(19, 26, 'fxKBifIGQ7GJgXJwiQYgVC:APA91bFa481VwayyiIKTbgfknte2AeYDIYjDwwquD0qg60TZisGUJghBgL-U6b1DX-e7Ly6ndynMhIvr_ytSYyKzVJtuPJiyacawLd2UYpd0LPmfX4W16xIaY6apIRGEStWvwp10nE8_', 'android', '2022-09-27 08:04:00', '2022-09-27 08:04:00'),
+(20, 26, 'diKhibWCS1Wc4xHYFUTwTq:APA91bHDyHy68euNEES3UJHYkO5PB9vuRDqi-dAfg7zWHAUIqB19nMG7QZ9uQYyEmh4Lj6TaJV8Su3Ssqy3OPE-WIPTrZ8YJBplsDVYNAKg4986MGT3GXsSfNUoqY_ihdf5lbfj8_au-', 'android', '2022-10-04 12:59:21', '2022-10-04 12:59:21'),
+(21, 26, 'f9_ynOwRQGqXlP4pdxzp1r:APA91bEn5-0WZ_uwexx5D2SNQm6bwOG7f1JA16pdxTh7oES92MoYi2HCHAdAYiCi68xxmMuYIL5pEFKqDC2B09WStVm1ctusJ8szGhU5z3MkykNHaF_FQW3Ap9p_Amx5c7QbbBTEO03t', 'android', '2022-10-06 10:39:41', '2022-10-06 10:39:41');
 
 -- --------------------------------------------------------
 
@@ -5088,8 +5243,10 @@ CREATE TABLE `projects` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `user_id` bigint(20) UNSIGNED DEFAULT NULL,
   `category_id` bigint(20) UNSIGNED DEFAULT NULL,
-  `title` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `text` text COLLATE utf8mb4_unicode_ci,
+  `title_ar` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `text_ar` text COLLATE utf8mb4_unicode_ci,
+  `title_en` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `text_en` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `image` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `ownership_rate` double DEFAULT NULL COMMENT 'يتم ادخاله بواسطة المستخدم',
   `success_rate` int(20) DEFAULT NULL COMMENT 'يتم حسابها بناءا علي تقييمات المستشارين للمشروع',
@@ -5104,10 +5261,11 @@ CREATE TABLE `projects` (
 -- Dumping data for table `projects`
 --
 
-INSERT INTO `projects` (`id`, `user_id`, `category_id`, `title`, `text`, `image`, `ownership_rate`, `success_rate`, `cost`, `status`, `is_investment`, `created_at`, `updated_at`) VALUES
-(1, 13, 1, 'مشروع ابهار المحاسبي', 'لوريم إيبسوم هو ببساطة نص شكلي (بمعنى أن الغاية هي الشكل وليس المحتوى) ويُستخدم في صناعات المطابع ودور النشر. كان لوريم إيبسوم ولايزال المعيار للنص الشكلي منذ القرن الخامس عشر عندما قامت مطبعة مجهولة برص مجموعة من الأحرف بشكل عشوائي أخذتها من نص، لتكوّن كتيّب بمثابة دليل أو مرجع شكلي لهذه الأحرف. خمسة قرون من الزمن لم تقضي على هذا النص، بل انه حتى صار مستخدماً وبشكله الأصلي في الطباعة والتنضيد الإلكتروني. انتشر بشكل كبير في ستينيّات هذا القرن مع إصدار رقائق \"ليتراسيت\" البلاستيكية تحوي مقاطع من هذا النص، وعاد لينتشر مرة أخرى مؤخراَ مع ظهور برامج النشر الإلكتروني مثل \"ألدوس بايج مايكر\" والتي حوت أيضاً على نسخ من نص لوريم إيبسوم.\n\n', 'storage/uploads/posts/1.png', 40, NULL, 200000, 'ended', '0', '2022-08-31 15:12:51', '2022-08-31 15:12:51'),
-(2, 8, 2, 'مشروع المنشأت الجديدة', 'لوريم إيبسوم هو ببساطة نص شكلي (بمعنى أن الغاية هي الشكل وليس المحتوى) ويُستخدم في صناعات المطابع ودور النشر. كان لوريم إيبسوم ولايزال المعيار للنص الشكلي منذ القرن الخامس عشر عندما قامت مطبعة مجهولة برص مجموعة من الأحرف بشكل عشوائي أخذتها من نص، لتكوّن كتيّب بمثابة دليل أو مرجع شكلي لهذه الأحرف. خمسة قرون من الزمن لم تقضي على هذا النص، بل انه حتى صار مستخدماً وبشكله الأصلي في الطباعة والتنضيد الإلكتروني. انتشر بشكل كبير في ستينيّات هذا القرن مع إصدار رقائق \"ليتراسيت\" البلاستيكية تحوي مقاطع من هذا النص، وعاد لينتشر مرة أخرى مؤخراَ مع ظهور برامج النشر الإلكتروني مثل \"ألدوس بايج مايكر\" والتي حوت أيضاً على نسخ من نص لوريم إيبسوم.\r\n\r\n', 'storage/uploads/posts/2.png', 60, NULL, 250000, 'ended', '0', '2022-08-31 15:12:51', '2022-08-31 15:12:51'),
-(7, 2, 1, 'test', 'test', NULL, 21, 21, 212, 'new', '0', '2022-09-25 08:44:45', '2022-09-25 08:44:45');
+INSERT INTO `projects` (`id`, `user_id`, `category_id`, `title_ar`, `text_ar`, `title_en`, `text_en`, `image`, `ownership_rate`, `success_rate`, `cost`, `status`, `is_investment`, `created_at`, `updated_at`) VALUES
+(1, 5, 1, 'مشروع ابهار المحاسبي', 'لوريم إيبسوم هو ببساطة نص شكلي (بمعنى أن الغاية هي الشكل وليس المحتوى) ويُستخدم في صناعات المطابع ودور النشر. كان لوريم إيبسوم ولايزال المعيار للنص الشكلي منذ القرن الخامس عشر عندما قامت مطبعة مجهولة برص مجموعة من الأحرف بشكل عشوائي أخذتها من نص، لتكوّن كتيّب بمثابة دليل أو مرجع شكلي لهذه الأحرف. خمسة قرون من الزمن لم تقضي على هذا النص، بل انه حتى صار مستخدماً وبشكله الأصلي في الطباعة والتنضيد الإلكتروني. انتشر بشكل كبير في ستينيّات هذا القرن مع إصدار رقائق \"ليتراسيت\" البلاستيكية تحوي مقاطع من هذا النص، وعاد لينتشر مرة أخرى مؤخراَ مع ظهور برامج النشر الإلكتروني مثل \"ألدوس بايج مايكر\" والتي حوت أيضاً على نسخ من نص لوريم إيبسوم.\n\n', 'title english', 'text english', 'storage/uploads/posts/1.png', 40, NULL, 200000, 'ended', '0', '2022-08-31 15:12:51', '2022-08-31 15:12:51'),
+(2, 8, 2, 'مشروع المنشأت الجديدة', 'لوريم إيبسوم هو ببساطة نص شكلي (بمعنى أن الغاية هي الشكل وليس المحتوى) ويُستخدم في صناعات المطابع ودور النشر. كان لوريم إيبسوم ولايزال المعيار للنص الشكلي منذ القرن الخامس عشر عندما قامت مطبعة مجهولة برص مجموعة من الأحرف بشكل عشوائي أخذتها من نص، لتكوّن كتيّب بمثابة دليل أو مرجع شكلي لهذه الأحرف. خمسة قرون من الزمن لم تقضي على هذا النص، بل انه حتى صار مستخدماً وبشكله الأصلي في الطباعة والتنضيد الإلكتروني. انتشر بشكل كبير في ستينيّات هذا القرن مع إصدار رقائق \"ليتراسيت\" البلاستيكية تحوي مقاطع من هذا النص، وعاد لينتشر مرة أخرى مؤخراَ مع ظهور برامج النشر الإلكتروني مثل \"ألدوس بايج مايكر\" والتي حوت أيضاً على نسخ من نص لوريم إيبسوم.\r\n\r\n', 'title_en ', 'text_en', 'storage/uploads/posts/2.png', 60, NULL, 250000, 'ended', '0', '2022-08-31 15:12:51', '2022-08-31 15:12:51'),
+(22, 11, 1, 'عنوان جديد', 'تفاصييييييييل', 'new title', 'details', 'storage/uploads/projects/cHJvZHVjdHMtaW1nNS5qcGc=_1662297379.jpg', 60, NULL, NULL, 'new', '0', '2022-09-04 13:16:19', '2022-09-22 13:59:50'),
+(23, 11, 2, 'مشروعي الجديد', 'الوووووووووووووووووووووووووووووصف', 'title english', 'text en', NULL, 60, NULL, 2500000, 'new', '0', '2022-09-22 11:26:35', '2022-09-22 11:26:35');
 
 -- --------------------------------------------------------
 
@@ -5143,9 +5301,34 @@ INSERT INTO `project_reviews` (`id`, `sub_category_id`, `user_id`, `project_id`,
 (10, 5, NULL, 19, NULL, NULL, '2022-09-04 13:13:12', '2022-09-04 13:13:12'),
 (11, 5, NULL, 20, NULL, NULL, '2022-09-04 13:14:39', '2022-09-04 13:14:39'),
 (12, 5, NULL, 21, NULL, NULL, '2022-09-04 13:15:15', '2022-09-04 13:15:15'),
-(14, 2, NULL, 22, NULL, NULL, '2022-09-04 14:54:47', '2022-09-04 14:54:47'),
-(15, 3, NULL, 22, NULL, NULL, '2022-09-04 14:54:47', '2022-09-04 14:54:47'),
-(16, 4, NULL, 22, NULL, NULL, '2022-09-04 14:54:47', '2022-09-04 14:54:47');
+(17, 5, NULL, 23, NULL, NULL, '2022-09-22 11:26:35', '2022-09-22 11:26:35'),
+(18, 6, NULL, 23, NULL, NULL, '2022-09-22 11:26:35', '2022-09-22 11:26:35'),
+(22, 2, NULL, 22, NULL, NULL, '2022-09-22 14:01:37', '2022-09-22 14:01:37'),
+(23, 3, NULL, 22, NULL, NULL, '2022-09-22 14:01:37', '2022-09-22 14:01:37'),
+(24, 4, NULL, 22, NULL, NULL, '2022-09-22 14:01:37', '2022-09-22 14:01:37');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `rate_providers`
+--
+
+CREATE TABLE `rate_providers` (
+  `id` int(11) NOT NULL,
+  `user_id` bigint(20) UNSIGNED NOT NULL,
+  `provider_id` bigint(20) UNSIGNED NOT NULL,
+  `rate_number` int(11) NOT NULL,
+  `details` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `rate_providers`
+--
+
+INSERT INTO `rate_providers` (`id`, `user_id`, `provider_id`, `rate_number`, `details`, `created_at`, `updated_at`) VALUES
+(1, 9, 8, 4, 'الصراحه شغله جميل', '2022-10-04 12:44:52', '2022-10-04 12:44:52');
 
 -- --------------------------------------------------------
 
@@ -5155,36 +5338,24 @@ INSERT INTO `project_reviews` (`id`, `sub_category_id`, `user_id`, `project_id`,
 
 CREATE TABLE `reports` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `from_user_id` bigint(20) UNSIGNED DEFAULT NULL,
-  `to_user_id` bigint(20) UNSIGNED DEFAULT NULL,
-  `type` enum('voice','text','file') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'text',
-  `text` text COLLATE utf8mb4_unicode_ci,
+  `user_id` bigint(20) UNSIGNED DEFAULT NULL COMMENT 'المستخدم اللي هيرفع الشكوي',
+  `provider_id` bigint(20) UNSIGNED DEFAULT NULL COMMENT 'مقدم الخدمه اللي هيترفع فيه الشكوي',
+  `reason` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'سبب المشكله',
+  `details` text COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'تفاصيل الشكوي',
+  `photo` text COLLATE utf8mb4_unicode_ci COMMENT 'صوره مرفقه',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- --------------------------------------------------------
-
 --
--- Table structure for table `report_details`
+-- Dumping data for table `reports`
 --
 
-CREATE TABLE `report_details` (
-  `id` bigint(20) NOT NULL,
-  `user_id` bigint(20) NOT NULL,
-  `reason` varchar(225) COLLATE utf8_unicode_ci NOT NULL,
-  `details` text COLLATE utf8_unicode_ci NOT NULL,
-  `image` text COLLATE utf8_unicode_ci,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` timestamp NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
---
--- Dumping data for table `report_details`
---
-
-INSERT INTO `report_details` (`id`, `user_id`, `reason`, `details`, `image`, `created_at`, `updated_at`) VALUES
-(2, 8, 'Lorem Ipsum is simply dummy text', 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.', 'storage/uploads/categories/6.png', '2022-10-06 09:43:37', '2022-10-06 09:43:37');
+INSERT INTO `reports` (`id`, `user_id`, `provider_id`, `reason`, `details`, `photo`, `created_at`, `updated_at`) VALUES
+(5, 9, 8, 'مخلصشي شغله', 'متفق معاه تقريبا داخل في اسبوعين ومخلصشي الشغل وقايله يعملي لوجو', '16648885743152633c2efe95fc5.png', '2022-10-04 13:02:54', '2022-10-04 13:02:54'),
+(9, 9, 8, 'مخلصشي شغله', 'متفق معاه تقريبا داخل في اسبوعين ومخلصشي', NULL, '2022-10-04 14:25:14', '2022-10-04 14:25:14'),
+(15, 9, 8, 'مخلصشي شغله', 'متفق معاه تقريبا داخل في اسبوعين ومخلصشي', NULL, '2022-10-04 14:49:56', '2022-10-04 14:49:56'),
+(16, 9, 8, 'مخلصشي شغله', 'متفق معاه تقريبا داخل في اسبوعين ومخلصشي', '1664895021750633c482d2ad6c.jpg', '2022-10-04 14:50:21', '2022-10-04 14:50:21');
 
 -- --------------------------------------------------------
 
@@ -5242,7 +5413,34 @@ INSERT INTO `rooms` (`id`, `user_id`, `adviser_or_freelancer_id`, `consultation_
 (45, 11, 5, NULL, 3, NULL, '0', '2022-09-19 13:13:23', '2022-09-19 13:13:23'),
 (46, 11, 5, NULL, 3, NULL, '0', '2022-09-19 13:13:38', '2022-09-19 13:13:38'),
 (47, 11, 5, NULL, 3, NULL, '0', '2022-09-19 13:15:38', '2022-09-19 13:15:38'),
-(48, 11, 5, NULL, 3, NULL, '0', '2022-09-19 14:38:37', '2022-09-19 14:38:37');
+(48, 11, 5, NULL, 3, NULL, '0', '2022-09-19 14:38:37', '2022-09-19 14:38:37'),
+(49, 11, 5, NULL, 3, NULL, '0', '2022-09-25 10:35:49', '2022-09-25 10:35:49'),
+(50, 11, 5, NULL, 3, NULL, '0', '2022-09-25 11:57:53', '2022-09-25 11:57:53'),
+(51, 11, 5, NULL, 3, NULL, '0', '2022-09-25 11:58:00', '2022-09-25 11:58:00'),
+(52, 11, 5, NULL, 3, NULL, '0', '2022-09-25 11:58:09', '2022-09-25 11:58:09'),
+(53, 11, 5, NULL, 3, NULL, '0', '2022-09-25 11:58:12', '2022-09-25 11:58:12'),
+(54, 11, 5, NULL, 2, NULL, '0', '2022-09-25 12:38:48', '2022-09-25 12:38:48'),
+(55, 11, 5, NULL, 2, NULL, '0', '2022-09-25 14:39:25', '2022-09-25 14:39:25'),
+(56, 11, 5, NULL, 2, NULL, '0', '2022-09-25 14:41:00', '2022-09-25 14:41:00'),
+(57, 11, 5, NULL, 2, NULL, '0', '2022-09-25 14:53:22', '2022-09-25 14:53:22'),
+(58, 11, 5, NULL, 3, NULL, '0', '2022-09-26 12:03:16', '2022-09-26 12:03:16'),
+(59, 11, 5, NULL, 3, NULL, '0', '2022-09-26 12:40:51', '2022-09-26 12:40:51'),
+(60, 11, 5, NULL, 3, NULL, '0', '2022-09-28 07:51:41', '2022-09-28 07:51:41'),
+(61, 11, 5, NULL, 3, NULL, '0', '2022-09-28 07:52:14', '2022-09-28 07:52:14'),
+(62, 11, 5, NULL, 3, NULL, '0', '2022-09-28 10:58:57', '2022-09-28 10:58:57'),
+(63, 8, 5, NULL, 3, NULL, '0', '2022-09-28 11:11:20', '2022-09-28 11:11:20'),
+(64, 8, 5, NULL, 3, NULL, '0', '2022-09-28 11:17:34', '2022-09-28 11:17:34'),
+(65, 8, 5, NULL, 3, NULL, '0', '2022-09-28 11:18:03', '2022-09-28 11:18:03'),
+(66, 8, 5, NULL, 3, NULL, '0', '2022-09-28 11:18:09', '2022-09-28 11:18:09'),
+(67, 8, 5, NULL, 3, NULL, '0', '2022-09-28 11:18:15', '2022-09-28 11:18:15'),
+(68, 8, 5, NULL, 4, NULL, '0', '2022-10-02 09:20:03', '2022-10-02 09:20:03'),
+(69, 8, 5, NULL, 4, NULL, '0', '2022-10-02 11:23:31', '2022-10-02 11:23:31'),
+(70, 8, 5, NULL, 4, NULL, '0', '2022-10-02 11:23:49', '2022-10-02 11:23:49'),
+(71, 8, 5, NULL, 4, NULL, '0', '2022-10-09 14:00:44', '2022-10-09 14:00:44'),
+(72, 8, 5, NULL, 4, NULL, '0', '2022-10-09 14:00:50', '2022-10-09 14:00:50'),
+(73, 8, 5, NULL, 4, NULL, '0', '2022-10-16 08:38:20', '2022-10-16 08:38:20'),
+(75, 8, 5, NULL, 4, NULL, '0', '2022-10-16 08:48:22', '2022-10-16 08:48:22'),
+(79, 16, 28, NULL, 4, NULL, '0', '2022-10-16 09:44:33', '2022-10-16 09:44:33');
 
 -- --------------------------------------------------------
 
@@ -5267,76 +5465,125 @@ CREATE TABLE `room_messages` (
 --
 
 INSERT INTO `room_messages` (`id`, `from_user_id`, `to_user_id`, `room_id`, `type`, `message`, `file`, `created_at`, `updated_at`) VALUES
-(2, 11, 5, 17, 'text', 'اهلا بك استاذ  خالد', NULL, '2022-09-12 11:19:33', '2022-09-12 11:19:33'),
-(3, 11, 5, 17, 'file', NULL, 'storage/uploads/chats/cHJvZHVjdHMtaW1nMS5qcGc=_1662981620.jpg', '2022-09-12 11:20:20', '2022-09-12 11:20:20'),
-(4, 5, 11, 17, 'text', 'مرحبا بك يرجي ارسال كل التفاصيل المطلوبة ', NULL, '2022-09-12 11:20:20', '2022-09-12 11:20:20'),
-(10, 11, 5, 17, 'file', 'اهلا بك استاذ  خالد', NULL, '2022-09-13 12:01:50', '2022-09-13 12:01:50'),
-(11, 11, 5, 18, 'file', 'اهلا بك استاذ  خالد', NULL, '2022-09-13 12:02:39', '2022-09-13 12:02:39'),
-(12, 11, 11, 18, 'file', 'اهلا بك استاذ  خالد', NULL, '2022-09-13 12:25:03', '2022-09-13 12:25:03'),
-(13, 11, 11, 18, 'text', 'اهلا بك استاذ  خالد', NULL, '2022-09-13 12:25:45', '2022-09-13 12:25:45'),
-(14, 11, 11, 22, 'text', 'اهلا بك استاذ  خالد', NULL, '2022-09-13 14:41:33', '2022-09-13 14:41:33'),
-(15, 11, 16, 22, 'text', 'اهلا بك استاذ  خالد', NULL, '2022-09-13 14:51:09', '2022-09-13 14:51:09'),
-(16, 11, 16, 22, 'text', 'اهلا بك استاذ  خالد', NULL, '2022-09-13 14:51:16', '2022-09-13 14:51:16'),
-(17, 11, 5, 22, 'text', 'اهلا بك استاذ  خالد', NULL, '2022-09-13 14:52:07', '2022-09-13 14:52:07'),
-(18, 11, 5, 23, 'text', 'اهلا بك استاذ  خالد', NULL, '2022-09-13 14:52:26', '2022-09-13 14:52:26'),
-(19, 11, 16, 23, 'text', 'اهلا بك استاذ  خالد', NULL, '2022-09-13 14:53:01', '2022-09-13 14:53:01'),
-(20, 11, 11, 23, 'text', 'اهلا بك استاذ  خالد', NULL, '2022-09-13 14:53:16', '2022-09-13 14:53:16'),
-(21, 11, 11, 23, 'text', 'اهلا بك استاذ  خالد', NULL, '2022-09-14 12:48:47', '2022-09-14 12:48:47'),
-(22, 11, 11, 23, 'file', NULL, 'storage/uploads/chats/R3JvdXAgKDUpLnN2Zw==_1663164698.svg', '2022-09-14 14:11:38', '2022-09-14 14:11:38'),
-(23, 16, 5, 40, 'file', NULL, 'storage/uploads/chats/aW1hZ2VfcGlja2VyNzY3MTA2ODIyNDg1NDEyODExMC5qcGc=_1663166864.jpg', '2022-09-14 14:47:44', '2022-09-14 14:47:44'),
-(24, 11, 11, 23, 'file', NULL, 'storage/uploads/chats/R3JvdXAgKDUpLnN2Zw==_1663166986.svg', '2022-09-14 14:49:46', '2022-09-14 14:49:46'),
-(25, 16, 5, 40, 'file', NULL, 'storage/uploads/chats/aW1hZ2VfcGlja2VyNDIyMDE3NTA5ODMyNzE2NTc2MC5qcGc=_1663166996.jpg', '2022-09-14 14:49:56', '2022-09-14 14:49:56'),
-(26, 11, 11, 23, 'file', NULL, 'storage/uploads/chats/R3JvdXAgKDUpLnN2Zw==_1663167545.svg', '2022-09-14 14:59:05', '2022-09-14 14:59:05'),
-(27, 16, 5, 40, 'text', 'سلام عليكم', NULL, '2022-09-14 15:09:45', '2022-09-14 15:09:45'),
-(28, 16, 5, 40, 'text', 'سلام عليكم', NULL, '2022-09-14 15:09:46', '2022-09-14 15:09:46'),
-(29, 16, 5, 40, 'text', 'اهلا', NULL, '2022-09-15 12:20:05', '2022-09-15 12:20:05'),
-(30, 16, 5, 40, 'text', 'ازيك', NULL, '2022-09-15 12:20:40', '2022-09-15 12:20:40'),
-(31, 16, 5, 40, 'file', NULL, 'storage/uploads/chats/aW1hZ2VfcGlja2VyMzI0MzMzMjQzNDU5MTE1NDk2Ni5qcGc=_1663244924.jpg', '2022-09-15 12:28:44', '2022-09-15 12:28:44'),
-(32, 16, 5, 40, 'file', NULL, 'storage/uploads/chats/aW1hZ2VfcGlja2VyMzI0MzMzMjQzNDU5MTE1NDk2Ni5qcGc=_1663244935.jpg', '2022-09-15 12:28:55', '2022-09-15 12:28:55'),
-(33, 16, 5, 40, 'file', NULL, 'storage/uploads/chats/aW1hZ2VfcGlja2VyMzI0MzMzMjQzNDU5MTE1NDk2Ni5qcGc=_1663244956.jpg', '2022-09-15 12:29:16', '2022-09-15 12:29:16'),
-(34, 16, 5, 40, 'file', NULL, 'storage/uploads/chats/aW1hZ2VfcGlja2VyMzI0MzMzMjQzNDU5MTE1NDk2Ni5qcGc=_1663244958.jpg', '2022-09-15 12:29:18', '2022-09-15 12:29:18'),
-(35, 16, 5, 40, 'file', NULL, 'storage/uploads/chats/aW1hZ2VfcGlja2VyMzI0MzMzMjQzNDU5MTE1NDk2Ni5qcGc=_1663244960.jpg', '2022-09-15 12:29:20', '2022-09-15 12:29:20'),
-(36, 16, 5, 40, 'file', NULL, 'storage/uploads/chats/aW1hZ2VfcGlja2VyMzI0MzMzMjQzNDU5MTE1NDk2Ni5qcGc=_1663244961.jpg', '2022-09-15 12:29:21', '2022-09-15 12:29:21'),
-(37, 16, 5, 40, 'file', NULL, 'storage/uploads/chats/aW1hZ2VfcGlja2VyMzI0MzMzMjQzNDU5MTE1NDk2Ni5qcGc=_1663244961.jpg', '2022-09-15 12:29:21', '2022-09-15 12:29:21'),
-(38, 16, 5, 40, 'file', NULL, 'storage/uploads/chats/aW1hZ2VfcGlja2VyMzI0MzMzMjQzNDU5MTE1NDk2Ni5qcGc=_1663244966.jpg', '2022-09-15 12:29:26', '2022-09-15 12:29:26'),
-(39, 16, 5, 40, 'text', 'اهلا', NULL, '2022-09-15 12:38:45', '2022-09-15 12:38:45'),
-(40, 16, 5, 40, 'text', 'ازيم', NULL, '2022-09-15 12:43:32', '2022-09-15 12:43:32'),
-(41, 16, 5, 40, 'text', 'تاهلا', NULL, '2022-09-15 12:47:09', '2022-09-15 12:47:09'),
-(42, 16, 5, 40, 'text', 'اهلت', NULL, '2022-09-15 12:52:16', '2022-09-15 12:52:16'),
-(43, 16, 5, 40, 'text', 'اهلا', NULL, '2022-09-15 12:53:48', '2022-09-15 12:53:48'),
-(44, 16, 5, 40, 'text', 'اهلت', NULL, '2022-09-15 13:05:32', '2022-09-15 13:05:32'),
-(45, 16, 5, 40, 'text', 'اهلا', NULL, '2022-09-15 13:09:50', '2022-09-15 13:09:50'),
-(46, 16, 5, 40, 'text', 'احمد', NULL, '2022-09-15 14:19:34', '2022-09-15 14:19:34'),
-(47, 16, 5, 40, 'text', 'سلام', NULL, '2022-09-15 14:20:00', '2022-09-15 14:20:00'),
-(48, 16, 5, 40, 'text', 'اهلا', NULL, '2022-09-15 14:22:43', '2022-09-15 14:22:43'),
-(49, 16, 5, 40, 'text', 'سلام', NULL, '2022-09-15 14:33:16', '2022-09-15 14:33:16'),
-(50, 16, 5, 40, 'text', 'سلام عليكم', NULL, '2022-09-15 14:44:26', '2022-09-15 14:44:26'),
-(51, 16, 5, 40, 'text', 'سلام', NULL, '2022-09-15 15:14:51', '2022-09-15 15:14:51');
+(249, 11, 5, 17, 'file', 'يرجي ارسال التفاصيل', '20221017081825.jpg', '2022-10-17 08:18:25', '2022-10-17 08:18:25'),
+(250, 5, 5, 75, 'file', NULL, '20221017081951.jpg', '2022-10-17 08:19:51', '2022-10-17 08:19:51'),
+(251, 5, 5, 75, 'text', 'تمتم', NULL, '2022-10-17 08:21:10', '2022-10-17 08:21:10'),
+(252, 5, 5, 75, 'text', 'تمام', NULL, '2022-10-17 08:22:47', '2022-10-17 08:22:47'),
+(253, 5, 5, 75, 'file', NULL, '20221017082505.jpg', '2022-10-17 08:25:05', '2022-10-17 08:25:05'),
+(254, 5, 5, 75, 'file', NULL, '20221017082705.jpg', '2022-10-17 08:27:05', '2022-10-17 08:27:05'),
+(255, 5, 5, 75, 'file', NULL, '20221017082719.jpg', '2022-10-17 08:27:19', '2022-10-17 08:27:19'),
+(256, 5, 5, 75, 'file', NULL, '20221017084831.jpg', '2022-10-17 08:48:31', '2022-10-17 08:48:31'),
+(257, 5, 5, 75, 'text', 'تمام', NULL, '2022-10-17 08:48:32', '2022-10-17 08:48:32'),
+(258, 5, 5, 75, 'text', 'تمام', NULL, '2022-10-17 08:48:51', '2022-10-17 08:48:51'),
+(259, 5, 5, 75, 'text', 'تمام', NULL, '2022-10-17 08:48:54', '2022-10-17 08:48:54'),
+(260, 5, 5, 75, 'file', NULL, '20221017085847.jpg', '2022-10-17 08:58:47', '2022-10-17 08:58:47'),
+(261, 5, 5, 75, 'text', 'تمام', NULL, '2022-10-17 08:59:08', '2022-10-17 08:59:08'),
+(262, 5, 5, 75, 'text', 'ت', NULL, '2022-10-17 09:00:18', '2022-10-17 09:00:18'),
+(263, 5, 5, 75, 'file', NULL, '20221017091015.jpg', '2022-10-17 09:10:15', '2022-10-17 09:10:15'),
+(264, 5, 5, 75, 'text', 'تمام', NULL, '2022-10-17 09:14:51', '2022-10-17 09:14:51'),
+(265, 5, 5, 75, 'text', 'اهلا', NULL, '2022-10-17 09:16:23', '2022-10-17 09:16:23'),
+(266, 5, 5, 75, 'text', 'تمام', NULL, '2022-10-17 09:16:23', '2022-10-17 09:16:23'),
+(267, 5, 5, 75, 'text', 'تمام', NULL, '2022-10-17 09:16:33', '2022-10-17 09:16:33'),
+(268, 5, 5, 75, 'text', 'تمام', NULL, '2022-10-17 09:27:48', '2022-10-17 09:27:48'),
+(269, 5, 5, 75, 'text', 'اهلا', NULL, '2022-10-17 09:27:55', '2022-10-17 09:27:55'),
+(270, 5, 5, 75, 'text', 'تمام', NULL, '2022-10-17 09:28:38', '2022-10-17 09:28:38'),
+(271, 5, 5, 75, 'text', 'اهلا', NULL, '2022-10-17 09:28:51', '2022-10-17 09:28:51'),
+(272, 5, 5, 75, 'file', NULL, '20221017094239.jpg', '2022-10-17 09:42:39', '2022-10-17 09:42:39'),
+(273, 5, 5, 75, 'text', 'ت', NULL, '2022-10-17 09:49:06', '2022-10-17 09:49:06'),
+(274, 5, 5, 75, 'text', 'تت', NULL, '2022-10-17 09:57:31', '2022-10-17 09:57:31'),
+(275, 5, 5, 75, 'text', 'عععععع', NULL, '2022-10-17 10:06:31', '2022-10-17 10:06:31'),
+(276, 5, 5, 75, 'text', 'ت', NULL, '2022-10-17 10:11:53', '2022-10-17 10:11:53'),
+(277, 5, 5, 75, 'text', 'ب', NULL, '2022-10-17 10:16:38', '2022-10-17 10:16:38'),
+(278, 5, 5, 75, 'text', 'اهلا', NULL, '2022-10-17 10:17:13', '2022-10-17 10:17:13'),
+(279, 5, 5, 75, 'text', 'اهلا', NULL, '2022-10-17 10:54:37', '2022-10-17 10:54:37'),
+(280, 5, 5, 75, 'text', 'معاك', NULL, '2022-10-17 10:54:48', '2022-10-17 10:54:48'),
+(281, 5, 5, 75, 'text', 'معاه', NULL, '2022-10-17 10:55:02', '2022-10-17 10:55:02'),
+(282, 5, 5, 75, 'text', 'ايوه', NULL, '2022-10-17 11:49:19', '2022-10-17 11:49:19'),
+(283, 5, 5, 75, 'file', NULL, '20221017115523.jpg', '2022-10-17 11:55:23', '2022-10-17 11:55:23'),
+(284, 5, 5, 75, 'text', 'ت', NULL, '2022-10-17 11:55:39', '2022-10-17 11:55:39'),
+(285, 5, 5, 75, 'text', 'مين', NULL, '2022-10-17 11:59:53', '2022-10-17 11:59:53'),
+(286, 5, 5, 75, 'text', 'اهلا', NULL, '2022-10-17 12:07:34', '2022-10-17 12:07:34'),
+(287, 5, 5, 75, 'text', 'هلا', NULL, '2022-10-17 12:11:29', '2022-10-17 12:11:29'),
+(288, 5, 5, 75, 'text', 'هات', NULL, '2022-10-17 12:13:41', '2022-10-17 12:13:41'),
+(289, 5, 5, 75, 'text', 'ه', NULL, '2022-10-17 12:14:38', '2022-10-17 12:14:38'),
+(290, 5, 5, 75, 'text', 'هلا', NULL, '2022-10-17 12:19:20', '2022-10-17 12:19:20'),
+(291, 5, 5, 75, 'text', 'اهلا', NULL, '2022-10-17 12:22:41', '2022-10-17 12:22:41'),
+(292, 5, 5, 75, 'text', 'اهلين', NULL, '2022-10-17 12:23:12', '2022-10-17 12:23:12'),
+(293, 5, 5, 75, 'text', 'هلا', NULL, '2022-10-17 12:23:16', '2022-10-17 12:23:16'),
+(294, 5, 5, 75, 'text', 'اهلا', NULL, '2022-10-17 12:31:28', '2022-10-17 12:31:28'),
+(295, 5, 5, 75, 'text', 'اهلا', NULL, '2022-10-17 12:36:44', '2022-10-17 12:36:44'),
+(296, 5, 5, 75, 'text', 'اهلا', NULL, '2022-10-17 12:36:53', '2022-10-17 12:36:53'),
+(297, 5, 5, 75, 'text', 'هىا', NULL, '2022-10-17 12:37:13', '2022-10-17 12:37:13'),
+(298, 5, 5, 75, 'text', 'ايوه', NULL, '2022-10-17 12:37:19', '2022-10-17 12:37:19'),
+(299, 5, 5, 75, 'text', 'هلا', NULL, '2022-10-17 12:42:45', '2022-10-17 12:42:45'),
+(300, 5, 5, 75, 'text', 'اها', NULL, '2022-10-17 12:43:06', '2022-10-17 12:43:06'),
+(301, 5, 5, 75, 'text', 'هلا', NULL, '2022-10-17 12:50:45', '2022-10-17 12:50:45'),
+(302, 5, 5, 75, 'text', 'خ', NULL, '2022-10-17 12:51:38', '2022-10-17 12:51:38'),
+(303, 5, 5, 75, 'text', 'هلا', NULL, '2022-10-17 13:01:01', '2022-10-17 13:01:01'),
+(304, 5, 5, 75, 'text', 'ه', NULL, '2022-10-17 13:05:01', '2022-10-17 13:05:01'),
+(305, 5, 5, 75, 'text', 'ايوه', NULL, '2022-10-17 13:06:10', '2022-10-17 13:06:10'),
+(306, 5, 5, 75, 'text', 'تمام', NULL, '2022-10-17 13:08:03', '2022-10-17 13:08:03'),
+(307, 5, 5, 75, 'text', 'هلا', NULL, '2022-10-17 13:12:10', '2022-10-17 13:12:10'),
+(308, 5, 5, 75, 'text', 'اهلا', NULL, '2022-10-17 13:17:18', '2022-10-17 13:17:18'),
+(309, 5, 5, 75, 'text', 'اهلين', NULL, '2022-10-17 13:17:44', '2022-10-17 13:17:44'),
+(310, 5, 5, 75, 'text', 'هلا', NULL, '2022-10-17 13:18:42', '2022-10-17 13:18:42'),
+(311, 5, 5, 75, 'text', 'هلا', NULL, '2022-10-17 13:20:04', '2022-10-17 13:20:04'),
+(312, 5, 5, 75, 'text', 'اهلا', NULL, '2022-10-17 13:20:14', '2022-10-17 13:20:14'),
+(313, 5, 5, 75, 'file', NULL, '20221017132356.jpg', '2022-10-17 13:23:56', '2022-10-17 13:23:56'),
+(314, 5, 5, 75, 'file', NULL, '20221017132629.jpg', '2022-10-17 13:26:29', '2022-10-17 13:26:29'),
+(315, 5, 5, 75, 'text', 'هلا', NULL, '2022-10-17 13:26:29', '2022-10-17 13:26:29'),
+(316, 5, 5, 75, 'text', 'اخلا', NULL, '2022-10-17 13:28:19', '2022-10-17 13:28:19'),
+(317, 5, 5, 75, 'text', 'هلا', NULL, '2022-10-17 13:32:00', '2022-10-17 13:32:00'),
+(318, 5, 5, 75, 'file', NULL, '20221017133214.jpg', '2022-10-17 13:32:14', '2022-10-17 13:32:14'),
+(319, 5, 5, 75, 'text', 'هلا', NULL, '2022-10-17 13:34:26', '2022-10-17 13:34:26'),
+(320, 5, 5, 75, 'file', NULL, '20221017135306.jpg', '2022-10-17 13:53:06', '2022-10-17 13:53:06'),
+(321, 5, 5, 75, 'text', 'ازيك يا  محمد', NULL, '2022-10-17 14:18:33', '2022-10-17 14:18:33'),
+(322, 5, 5, 75, 'text', 'الحمد لله تمام', NULL, '2022-10-17 14:21:28', '2022-10-17 14:21:28'),
+(323, 5, 5, 75, 'text', 'الله', NULL, '2022-10-17 14:21:40', '2022-10-17 14:21:40'),
+(324, 5, 5, 75, 'text', 'اهلا', NULL, '2022-10-17 14:43:21', '2022-10-17 14:43:21'),
+(325, 5, 5, 75, 'text', 'اهلا', NULL, '2022-10-18 13:35:54', '2022-10-18 13:35:54'),
+(326, 5, 5, 75, 'text', 'مرحب', NULL, '2022-10-18 13:36:01', '2022-10-18 13:36:01'),
+(327, 5, 5, 75, 'text', 'ا', NULL, '2022-10-18 13:36:19', '2022-10-18 13:36:19'),
+(328, 5, 5, 75, 'file', NULL, '20221018133644.jpg', '2022-10-18 13:36:44', '2022-10-18 13:36:44'),
+(329, 5, 5, 75, 'file', NULL, '20221018133715.jpg', '2022-10-18 13:37:15', '2022-10-18 13:37:15'),
+(330, 5, 5, 75, 'file', NULL, '20221018135312.jpg', '2022-10-18 13:53:12', '2022-10-18 13:53:12'),
+(331, 5, 5, 75, 'text', 'ا', NULL, '2022-10-18 13:53:48', '2022-10-18 13:53:48'),
+(332, 5, 5, 75, 'text', 'عع', NULL, '2022-10-18 14:06:53', '2022-10-18 14:06:53'),
+(333, 5, 5, 75, 'text', 'ت', NULL, '2022-10-18 14:29:40', '2022-10-18 14:29:40'),
+(334, 5, 5, 75, 'text', 'ت', NULL, '2022-10-18 14:32:47', '2022-10-18 14:32:47'),
+(335, 5, 5, 75, 'text', 'ع', NULL, '2022-10-18 14:32:54', '2022-10-18 14:32:54'),
+(336, 5, 5, 75, 'text', 'Hello', NULL, '2022-10-19 09:56:52', '2022-10-19 09:56:52'),
+(337, 5, 5, 75, 'text', 'Vvv', NULL, '2022-10-19 12:16:07', '2022-10-19 12:16:07'),
+(338, 5, 5, 75, 'text', 'Cc', NULL, '2022-10-19 12:16:31', '2022-10-19 12:16:31');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `service_request`
+-- Table structure for table `service_requests`
 --
 
-CREATE TABLE `service_request` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `freelancer_id` bigint(20) DEFAULT NULL,
-  `client_id` bigint(20) DEFAULT NULL,
-  `sub_category_id` bigint(20) DEFAULT NULL,
-  `price` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `details` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+CREATE TABLE `service_requests` (
+  `id` bigint(20) NOT NULL,
+  `provider_id` bigint(20) UNSIGNED NOT NULL,
+  `user_id` bigint(20) UNSIGNED NOT NULL,
+  `sub_category_id` bigint(20) UNSIGNED NOT NULL,
+  `price` double NOT NULL,
+  `delivery_date` date NOT NULL,
+  `details` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `room_id` bigint(20) UNSIGNED NOT NULL,
+  `status` enum('new','accepted','refused','completed') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'new',
+  `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data for table `service_request`
+-- Dumping data for table `service_requests`
 --
 
-INSERT INTO `service_request` (`id`, `freelancer_id`, `client_id`, `sub_category_id`, `price`, `details`, `created_at`, `updated_at`) VALUES
-(14, 5, 4, 2, '2000', NULL, '2022-10-03 09:50:29', NULL),
-(15, 5, 8, 2, '2000', 'lorem', '2022-10-06 09:56:50', NULL);
+INSERT INTO `service_requests` (`id`, `provider_id`, `user_id`, `sub_category_id`, `price`, `delivery_date`, `details`, `room_id`, `status`, `created_at`, `updated_at`) VALUES
+(5, 5, 16, 4, 300, '2022-12-10', 'هرسم العميل ده في برواز كبير', 19, 'completed', '2022-10-13 10:45:52', '2022-10-19 12:47:05'),
+(7, 5, 8, 4, 200, '2012-01-01', 'تفاصيل', 70, 'new', '2022-10-16 09:41:02', '2022-10-16 09:41:02'),
+(8, 5, 8, 4, 200, '2012-01-01', 'تفاصيل', 70, 'new', '2022-10-16 09:53:49', '2022-10-16 09:53:49');
 
 -- --------------------------------------------------------
 
@@ -5346,11 +5593,11 @@ INSERT INTO `service_request` (`id`, `freelancer_id`, `client_id`, `sub_category
 
 CREATE TABLE `setting` (
   `id` int(11) NOT NULL,
-  `about_ar` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `about_en` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `terms_ar` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `terms_en` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `privacy_ar` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `about_ar` text COLLATE utf8mb4_unicode_ci,
+  `about_en` text COLLATE utf8mb4_unicode_ci,
+  `terms_ar` text COLLATE utf8mb4_unicode_ci,
+  `terms_en` text COLLATE utf8mb4_unicode_ci,
+  `privacy_ar` text COLLATE utf8mb4_unicode_ci,
   `privacy_en` text COLLATE utf8mb4_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -5359,7 +5606,7 @@ CREATE TABLE `setting` (
 --
 
 INSERT INTO `setting` (`id`, `about_ar`, `about_en`, `terms_ar`, `terms_en`, `privacy_ar`, `privacy_en`) VALUES
-(2, '<p>ما هو لوريم إيبسوم؟ لوريم إيبسوم هو ببساطة نص شكلي يستخدم في صناعة الطباعة والتنضيد. كان Lorem Ipsum هو النص الوهمي القياسي في الصناعة منذ القرن الخامس عشر الميلادي ، عندما أخذت طابعة غير معروفة لوحًا من النوع وتدافعت عليه لعمل كتاب عينة. لقد نجت ليس فقط خمسة قرون ، ولكن أيضًا القفزة في التنضيد الإلكتروني ، وظلت دون تغيير جوهري. تم نشره في الستينيات من القرن الماضي بإصدار أوراق Letraset التي تحتوي على مقاطع Lorem Ipsum ، ومؤخرًا مع برامج النشر المكتبي مثل Aldus PageMaker بما في ذلك إصدارات Lorem Ipsum. لماذا نستخدمه؟ هناك حقيقة مثبتة منذ زمن طويل وهي أن المحتوى المقروء لصفحة ما سيلهي القارئ عن التركيز على الشكل الخارجي للنص أو شكل توضع الفقرات في الصفحة التي يقرأها. الهدف من استخدام لوريم إيبسوم هو أنه يحتوي على توزيع طبيعي -إلى حد ما- للأحرف ، بدلاً من استخدام \"هنا يوجد محتوى نصي ، هنا يوجد محتوى نصي\" ، مما يجعلها تبدو وكأنها إنجليزية قابلة للقراءة. تستخدم العديد من حزم النشر المكتبي ومحرري صفحات الويب الآن Lorem Ipsum كنص نموذج افتراضي ، وسيكشف البحث عن \"lorem ipsum\" عن العديد من مواقع الويب التي لا تزال في مهدها. تطورت إصدارات مختلفة على مر السنين ، أحيانًا عن طريق الصدفة ، وأحيانًا عن قصد (روح الدعابة المحقونة وما شابه ذلك). حيث أنها لا تأتي من؟ خلافًا للاعتقاد الشائع ، فإن Lorem Ipsum ليس مجرد نص عشوائي. لها جذور في قطعة من الأدب اللاتيني الكلاسيكي من 45 قبل الميلاد ، مما يجعلها أكثر من 2000 عام. قام ريتشارد مكلينتوك ، الأستاذ اللاتيني في كلية هامبدن سيدني في فرجينيا ، بالبحث عن واحدة من أكثر الكلمات اللاتينية غموضًا ، consectetur ، من مقطع لوريم إيبسوم ، وتصفح اقتباسات الكلمة في الأدب الكلاسيكي ، اكتشف المصدر الذي لا شك فيه. يأتي Lorem Ipsum من الأقسام 1.10.32 و 1.10.33 من \"de Finibus Bonorum et Malorum\" (أقصى الخير والشر) بقلم شيشرون ، الذي كتبه عام 45 قبل الميلاد. هذا الكتاب عبارة عن أطروحة حول نظرية الأخلاق ، وقد حظيت بشعبية كبيرة خلال عصر النهضة. السطر الأول من Lorem Ipsum ، \"Lorem ipsum dolor sit amet ..\" ، يأتي من سطر في القسم 1.10.32.</p>', '<p>ما هو لوريم إيبسوم؟ لوريم إيبسوم هو ببساطة نص شكلي يستخدم في صناعة الطباعة والتنضيد. كان Lorem Ipsum هو النص الوهمي القياسي في الصناعة منذ القرن الخامس عشر الميلادي ، عندما أخذت طابعة غير معروفة لوحًا من النوع وتدافعت عليه لعمل كتاب عينة. لقد نجت ليس فقط خمسة قرون ، ولكن أيضًا القفزة في التنضيد الإلكتروني ، وظلت دون تغيير جوهري. تم نشره في الستينيات من القرن الماضي بإصدار أوراق Letraset التي تحتوي على مقاطع Lorem Ipsum ، ومؤخرًا مع برامج النشر المكتبي مثل Aldus PageMaker بما في ذلك إصدارات Lorem Ipsum. لماذا نستخدمه؟ هناك حقيقة مثبتة منذ زمن طويل وهي أن المحتوى المقروء لصفحة ما سيلهي القارئ عن التركيز على الشكل الخارجي للنص أو شكل توضع الفقرات في الصفحة التي يقرأها. الهدف من استخدام لوريم إيبسوم هو أنه يحتوي على توزيع طبيعي -إلى حد ما- للأحرف ، بدلاً من استخدام \"هنا يوجد محتوى نصي ، هنا يوجد محتوى نصي\" ، مما يجعلها تبدو وكأنها إنجليزية قابلة للقراءة. تستخدم العديد من حزم النشر المكتبي ومحرري صفحات الويب الآن Lorem Ipsum كنص نموذج افتراضي ، وسيكشف البحث عن \"lorem ipsum\" عن العديد من مواقع الويب التي لا تزال في مهدها. تطورت إصدارات مختلفة على مر السنين ، أحيانًا عن طريق الصدفة ، وأحيانًا عن قصد (روح الدعابة المحقونة وما شابه ذلك). حيث أنها لا تأتي من؟ خلافًا للاعتقاد الشائع ، فإن Lorem Ipsum ليس مجرد نص عشوائي. لها جذور في قطعة من الأدب اللاتيني الكلاسيكي من 45 قبل الميلاد ، مما يجعلها أكثر من 2000 عام. قام ريتشارد مكلينتوك ، الأستاذ اللاتيني في كلية هامبدن سيدني في فرجينيا ، بالبحث عن واحدة من أكثر الكلمات اللاتينية غموضًا ، consectetur ، من مقطع لوريم إيبسوم ، وتصفح اقتباسات الكلمة في الأدب الكلاسيكي ، اكتشف المصدر الذي لا شك فيه. يأتي Lorem Ipsum من الأقسام 1.10.32 و 1.10.33 من \"de Finibus Bonorum et Malorum\" (أقصى الخير والشر) بقلم شيشرون ، الذي كتبه عام 45 قبل الميلاد. هذا الكتاب عبارة عن أطروحة حول نظرية الأخلاق ، وقد حظيت بشعبية كبيرة خلال عصر النهضة. السطر الأول من Lorem Ipsum ، \"Lorem ipsum dolor sit amet ..\" ، يأتي من سطر في القسم 1.10.32.</p>', '<p>ما هو لوريم إيبسوم؟ لوريم إيبسوم هو ببساطة نص شكلي يستخدم في صناعة الطباعة والتنضيد. كان Lorem Ipsum هو النص الوهمي القياسي في الصناعة منذ القرن الخامس عشر الميلادي ، عندما أخذت طابعة غير معروفة لوحًا من النوع وتدافعت عليه لعمل كتاب عينة. لقد نجت ليس فقط خمسة قرون ، ولكن أيضًا القفزة في التنضيد الإلكتروني ، وظلت دون تغيير جوهري. تم نشره في الستينيات من القرن الماضي بإصدار أوراق Letraset التي تحتوي على مقاطع Lorem Ipsum ، ومؤخرًا مع برامج النشر المكتبي مثل Aldus PageMaker بما في ذلك إصدارات Lorem Ipsum. لماذا نستخدمه؟ هناك حقيقة مثبتة منذ زمن طويل وهي أن المحتوى المقروء لصفحة ما سيلهي القارئ عن التركيز على الشكل الخارجي للنص أو شكل توضع الفقرات في الصفحة التي يقرأها. الهدف من استخدام لوريم إيبسوم هو أنه يحتوي على توزيع طبيعي -إلى حد ما- للأحرف ، بدلاً من استخدام \"هنا يوجد محتوى نصي ، هنا يوجد محتوى نصي\" ، مما يجعلها تبدو وكأنها إنجليزية قابلة للقراءة. تستخدم العديد من حزم النشر المكتبي ومحرري صفحات الويب الآن Lorem Ipsum كنص نموذج افتراضي ، وسيكشف البحث عن \"lorem ipsum\" عن العديد من مواقع الويب التي لا تزال في مهدها. تطورت إصدارات مختلفة على مر السنين ، أحيانًا عن طريق الصدفة ، وأحيانًا عن قصد (روح الدعابة المحقونة وما شابه ذلك). حيث أنها لا تأتي من؟ خلافًا للاعتقاد الشائع ، فإن Lorem Ipsum ليس مجرد نص عشوائي. لها جذور في قطعة من الأدب اللاتيني الكلاسيكي من 45 قبل الميلاد ، مما يجعلها أكثر من 2000 عام. قام ريتشارد مكلينتوك ، الأستاذ اللاتيني في كلية هامبدن سيدني في فرجينيا ، بالبحث عن واحدة من أكثر الكلمات اللاتينية غموضًا ، consectetur ، من مقطع لوريم إيبسوم ، وتصفح اقتباسات الكلمة في الأدب الكلاسيكي ، اكتشف المصدر الذي لا شك فيه. يأتي Lorem Ipsum من الأقسام 1.10.32 و 1.10.33 من \"de Finibus Bonorum et Malorum\" (أقصى الخير والشر) بقلم شيشرون ، الذي كتبه عام 45 قبل الميلاد. هذا الكتاب عبارة عن أطروحة حول نظرية الأخلاق ، وقد حظيت بشعبية كبيرة خلال عصر النهضة. السطر الأول من Lorem Ipsum ، \"Lorem ipsum dolor sit amet ..\" ، يأتي من سطر في القسم 1.10.32.</p>', '<p>What is Lorem Ipsum? Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum. Why do we use it? It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using \'Content here, content here\', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for \'lorem ipsum\' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like). Where does it come from? Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of \"de Finibus Bonorum et Malorum\" (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, \"Lorem ipsum dolor sit amet..\", comes from a line in section 1.10.32.</p>', '<p>ما هو لوريم إيبسوم؟ لوريم إيبسوم هو ببساطة نص شكلي يستخدم في صناعة الطباعة والتنضيد. كان Lorem Ipsum هو النص الوهمي القياسي في الصناعة منذ القرن الخامس عشر الميلادي ، عندما أخذت طابعة غير معروفة لوحًا من النوع وتدافعت عليه لعمل كتاب عينة. لقد نجت ليس فقط خمسة قرون ، ولكن أيضًا القفزة في التنضيد الإلكتروني ، وظلت دون تغيير جوهري. تم نشره في الستينيات من القرن الماضي بإصدار أوراق Letraset التي تحتوي على مقاطع Lorem Ipsum ، ومؤخرًا مع برامج النشر المكتبي مثل Aldus PageMaker بما في ذلك إصدارات Lorem Ipsum. لماذا نستخدمه؟ هناك حقيقة مثبتة منذ زمن طويل وهي أن المحتوى المقروء لصفحة ما سيلهي القارئ عن التركيز على الشكل الخارجي للنص أو شكل توضع الفقرات في الصفحة التي يقرأها. الهدف من استخدام لوريم إيبسوم هو أنه يحتوي على توزيع طبيعي -إلى حد ما- للأحرف ، بدلاً من استخدام \"هنا يوجد محتوى نصي ، هنا يوجد محتوى نصي\" ، مما يجعلها تبدو وكأنها إنجليزية قابلة للقراءة. تستخدم العديد من حزم النشر المكتبي ومحرري صفحات الويب الآن Lorem Ipsum كنص نموذج افتراضي ، وسيكشف البحث عن \"lorem ipsum\" عن العديد من مواقع الويب التي لا تزال في مهدها. تطورت إصدارات مختلفة على مر السنين ، أحيانًا عن طريق الصدفة ، وأحيانًا عن قصد (روح الدعابة المحقونة وما شابه ذلك). حيث أنها لا تأتي من؟ خلافًا للاعتقاد الشائع ، فإن Lorem Ipsum ليس مجرد نص عشوائي. لها جذور في قطعة من الأدب اللاتيني الكلاسيكي من 45 قبل الميلاد ، مما يجعلها أكثر من 2000 عام. قام ريتشارد مكلينتوك ، الأستاذ اللاتيني في كلية هامبدن سيدني في فرجينيا ، بالبحث عن واحدة من أكثر الكلمات اللاتينية غموضًا ، consectetur ، من مقطع لوريم إيبسوم ، وتصفح اقتباسات الكلمة في الأدب الكلاسيكي ، اكتشف المصدر الذي لا شك فيه. يأتي Lorem Ipsum من الأقسام 1.10.32 و 1.10.33 من \"de Finibus Bonorum et Malorum\" (أقصى الخير والشر) بقلم شيشرون ، الذي كتبه عام 45 قبل الميلاد. هذا الكتاب عبارة عن أطروحة حول نظرية الأخلاق ، وقد حظيت بشعبية كبيرة خلال عصر النهضة. السطر الأول من Lorem Ipsum ، \"Lorem ipsum dolor sit amet ..\" ، يأتي من سطر في القسم 1.10.32.</p>', '<p>What is Lorem Ipsum? Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum. Why do we use it? It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using \'Content here, content here\', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for \'lorem ipsum\' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like). Where does it come from? Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of \"de Finibus Bonorum et Malorum\" (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, \"Lorem ipsum dolor sit amet..\", comes from a line in section 1.10.32.</p>');
+(1, '<p>ما هو لوريم إيبسوم؟ لوريم إيبسوم هو ببساطة نص شكلي يستخدم في صناعة الطباعة والتنضيد. كان Lorem Ipsum هو النص الوهمي القياسي في الصناعة منذ القرن الخامس عشر الميلادي ، عندما أخذت طابعة غير معروفة لوحًا من النوع وتدافعت عليه لعمل كتاب عينة. لقد نجت ليس فقط خمسة قرون ، ولكن أيضًا القفزة في التنضيد الإلكتروني ، وظلت دون تغيير جوهري. تم نشره في الستينيات من القرن الماضي بإصدار أوراق Letraset التي تحتوي على مقاطع Lorem Ipsum ، ومؤخرًا مع برامج النشر المكتبي مثل Aldus PageMaker بما في ذلك إصدارات Lorem Ipsum. لماذا نستخدمه؟ هناك حقيقة مثبتة منذ زمن طويل وهي أن المحتوى المقروء لصفحة ما سيلهي القارئ عن التركيز على الشكل الخارجي للنص أو شكل توضع الفقرات في الصفحة التي يقرأها. الهدف من استخدام لوريم إيبسوم هو أنه يحتوي على توزيع طبيعي -إلى حد ما- للأحرف ، بدلاً من استخدام \"هنا يوجد محتوى نصي ، هنا يوجد محتوى نصي\" ، مما يجعلها تبدو وكأنها إنجليزية قابلة للقراءة. تستخدم العديد من حزم النشر المكتبي ومحرري صفحات الويب الآن Lorem Ipsum كنص نموذج افتراضي ، وسيكشف البحث عن \"lorem ipsum\" عن العديد من مواقع الويب التي لا تزال في مهدها. تطورت إصدارات مختلفة على مر السنين ، أحيانًا عن طريق الصدفة ، وأحيانًا عن قصد (روح الدعابة المحقونة وما شابه ذلك). حيث أنها لا تأتي من؟ خلافًا للاعتقاد الشائع ، فإن Lorem Ipsum ليس مجرد نص عشوائي. لها جذور في قطعة من الأدب اللاتيني الكلاسيكي من 45 قبل الميلاد ، مما يجعلها أكثر من 2000 عام. قام ريتشارد مكلينتوك ، الأستاذ اللاتيني في كلية هامبدن سيدني في فرجينيا ، بالبحث عن واحدة من أكثر الكلمات اللاتينية غموضًا ، consectetur ، من مقطع لوريم إيبسوم ، وتصفح اقتباسات الكلمة في الأدب الكلاسيكي ، اكتشف المصدر الذي لا شك فيه. يأتي Lorem Ipsum من الأقسام 1.10.32 و 1.10.33 من \"de Finibus Bonorum et Malorum\" (أقصى الخير والشر) بقلم شيشرون ، الذي كتبه عام 45 قبل الميلاد. هذا الكتاب عبارة عن أطروحة حول نظرية الأخلاق ، وقد حظيت بشعبية كبيرة خلال عصر النهضة. السطر الأول من Lorem Ipsum ، \"Lorem ipsum dolor sit amet ..\" ، يأتي من سطر في القسم 1.10.32.</p>', '<p>What is Lorem Ipsum? Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum. Why do we use it? It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using \'Content here, content here\', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for \'lorem ipsum\' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like). Where does it come from? Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of \"de Finibus Bonorum et Malorum\" (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, \"Lorem ipsum dolor sit amet..\", comes from a line in section 1.10.32.</p>', 'ما هو لوريم إيبسوم؟\r\nلوريم إيبسوم هو ببساطة نص شكلي يستخدم في صناعة الطباعة والتنضيد. كان Lorem Ipsum هو النص الوهمي القياسي في الصناعة منذ القرن الخامس عشر الميلادي ، عندما أخذت طابعة غير معروفة لوحًا من النوع وتدافعت عليه لعمل كتاب عينة. لقد نجت ليس فقط خمسة قرون ، ولكن أيضًا القفزة في التنضيد الإلكتروني ، وظلت دون تغيير جوهري. تم نشره في الستينيات من القرن الماضي بإصدار أوراق Letraset التي تحتوي على مقاطع Lorem Ipsum ، ومؤخرًا مع برامج النشر المكتبي مثل Aldus PageMaker بما في ذلك إصدارات Lorem Ipsum.\r\n\r\nلماذا نستخدمه؟\r\nهناك حقيقة مثبتة منذ زمن طويل وهي أن المحتوى المقروء لصفحة ما سيلهي القارئ عن التركيز على الشكل الخارجي للنص أو شكل توضع الفقرات في الصفحة التي يقرأها. الهدف من استخدام لوريم إيبسوم هو أنه يحتوي على توزيع طبيعي -إلى حد ما- للأحرف ، بدلاً من استخدام \"هنا يوجد محتوى نصي ، هنا يوجد محتوى نصي\" ، مما يجعلها تبدو وكأنها إنجليزية قابلة للقراءة. تستخدم العديد من حزم النشر المكتبي ومحرري صفحات الويب الآن Lorem Ipsum كنص نموذج افتراضي ، وسيكشف البحث عن \"lorem ipsum\" عن العديد من مواقع الويب التي لا تزال في مهدها. تطورت إصدارات مختلفة على مر السنين ، أحيانًا عن طريق الصدفة ، وأحيانًا عن قصد (روح الدعابة المحقونة وما شابه ذلك).\r\n\r\n\r\nحيث أنها لا تأتي من؟\r\nخلافًا للاعتقاد الشائع ، فإن Lorem Ipsum ليس مجرد نص عشوائي. لها جذور في قطعة من الأدب اللاتيني الكلاسيكي من 45 قبل الميلاد ، مما يجعلها أكثر من 2000 عام. قام ريتشارد مكلينتوك ، الأستاذ اللاتيني في كلية هامبدن سيدني في فرجينيا ، بالبحث عن واحدة من أكثر الكلمات اللاتينية غموضًا ، consectetur ، من مقطع لوريم إيبسوم ، وتصفح اقتباسات الكلمة في الأدب الكلاسيكي ، اكتشف المصدر الذي لا شك فيه. يأتي Lorem Ipsum من الأقسام 1.10.32 و 1.10.33 من \"de Finibus Bonorum et Malorum\" (أقصى الخير والشر) بقلم شيشرون ، الذي كتبه عام 45 قبل الميلاد. هذا الكتاب عبارة عن أطروحة حول نظرية الأخلاق ، وقد حظيت بشعبية كبيرة خلال عصر النهضة. السطر الأول من Lorem Ipsum ، \"Lorem ipsum dolor sit amet ..\" ، يأتي من سطر في القسم 1.10.32.', 'What is Lorem Ipsum?\r\nLorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.\r\n\r\nWhy do we use it?\r\nIt is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using \'Content here, content here\', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for \'lorem ipsum\' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).\r\n\r\n\r\nWhere does it come from?\r\nContrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of \"de Finibus Bonorum et Malorum\" (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, \"Lorem ipsum dolor sit amet..\", comes from a line in section 1.10.32.', 'ما هو لوريم إيبسوم؟\r\nلوريم إيبسوم هو ببساطة نص شكلي يستخدم في صناعة الطباعة والتنضيد. كان Lorem Ipsum هو النص الوهمي القياسي في الصناعة منذ القرن الخامس عشر الميلادي ، عندما أخذت طابعة غير معروفة لوحًا من النوع وتدافعت عليه لعمل كتاب عينة. لقد نجت ليس فقط خمسة قرون ، ولكن أيضًا القفزة في التنضيد الإلكتروني ، وظلت دون تغيير جوهري. تم نشره في الستينيات من القرن الماضي بإصدار أوراق Letraset التي تحتوي على مقاطع Lorem Ipsum ، ومؤخرًا مع برامج النشر المكتبي مثل Aldus PageMaker بما في ذلك إصدارات Lorem Ipsum.\r\n\r\nلماذا نستخدمه؟\r\nهناك حقيقة مثبتة منذ زمن طويل وهي أن المحتوى المقروء لصفحة ما سيلهي القارئ عن التركيز على الشكل الخارجي للنص أو شكل توضع الفقرات في الصفحة التي يقرأها. الهدف من استخدام لوريم إيبسوم هو أنه يحتوي على توزيع طبيعي -إلى حد ما- للأحرف ، بدلاً من استخدام \"هنا يوجد محتوى نصي ، هنا يوجد محتوى نصي\" ، مما يجعلها تبدو وكأنها إنجليزية قابلة للقراءة. تستخدم العديد من حزم النشر المكتبي ومحرري صفحات الويب الآن Lorem Ipsum كنص نموذج افتراضي ، وسيكشف البحث عن \"lorem ipsum\" عن العديد من مواقع الويب التي لا تزال في مهدها. تطورت إصدارات مختلفة على مر السنين ، أحيانًا عن طريق الصدفة ، وأحيانًا عن قصد (روح الدعابة المحقونة وما شابه ذلك).\r\n\r\n\r\nحيث أنها لا تأتي من؟\r\nخلافًا للاعتقاد الشائع ، فإن Lorem Ipsum ليس مجرد نص عشوائي. لها جذور في قطعة من الأدب اللاتيني الكلاسيكي من 45 قبل الميلاد ، مما يجعلها أكثر من 2000 عام. قام ريتشارد مكلينتوك ، الأستاذ اللاتيني في كلية هامبدن سيدني في فرجينيا ، بالبحث عن واحدة من أكثر الكلمات اللاتينية غموضًا ، consectetur ، من مقطع لوريم إيبسوم ، وتصفح اقتباسات الكلمة في الأدب الكلاسيكي ، اكتشف المصدر الذي لا شك فيه. يأتي Lorem Ipsum من الأقسام 1.10.32 و 1.10.33 من \"de Finibus Bonorum et Malorum\" (أقصى الخير والشر) بقلم شيشرون ، الذي كتبه عام 45 قبل الميلاد. هذا الكتاب عبارة عن أطروحة حول نظرية الأخلاق ، وقد حظيت بشعبية كبيرة خلال عصر النهضة. السطر الأول من Lorem Ipsum ، \"Lorem ipsum dolor sit amet ..\" ، يأتي من سطر في القسم 1.10.32.', 'What is Lorem Ipsum?\r\nLorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.\r\n\r\nWhy do we use it?\r\nIt is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using \'Content here, content here\', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for \'lorem ipsum\' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).\r\n\r\n\r\nWhere does it come from?\r\nContrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of \"de Finibus Bonorum et Malorum\" (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, \"Lorem ipsum dolor sit amet..\", comes from a line in section 1.10.32.');
 
 -- --------------------------------------------------------
 
@@ -5392,22 +5639,21 @@ CREATE TABLE `sub_categories` (
   `category_id` bigint(20) UNSIGNED DEFAULT NULL,
   `title_ar` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `title_en` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `image` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `terms_ar` text COLLATE utf8mb4_unicode_ci COMMENT 'شروط تقدم للخدمة هتدخل من لوحة التحكم',
+  `terms_ar` text COLLATE utf8mb4_unicode_ci,
   `terms_en` text COLLATE utf8mb4_unicode_ci,
-  `price` double NOT NULL DEFAULT '0' COMMENT 'سعر اشتراك للخدمة'
+  `image` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `sub_categories`
 --
 
-INSERT INTO `sub_categories` (`id`, `category_id`, `title_ar`, `title_en`, `image`, `terms_ar`, `terms_en`, `price`) VALUES
-(2, 1, 'محاسبة مالية', 'financial calc', 'storage/uploads/categories/6.png', 'لوريم إيبسوم هو ببساطة نص شكلي (بمعنى أن الغاية هي الشكل وليس المحتوى) ويُستخدم في صناعات المطابع ودور النشر. كان لوريم إيبسوم ولايزال المعيار للنص الشكلي منذ القرن الخامس عشر عندما قامت مطبعة مجهولة برص مجموعة من الأحرف بشكل عشوائي أخذتها من نص، لتكوّن كتيّب بمثابة دليل أو مرجع شكلي لهذه الأحرف. خمسة قرون من الزمن لم تقضي على هذا النص، بل انه حتى صار مستخدماً وبشكله الأصلي في الطباعة والتنضيد الإلكتروني. انتشر بشكل كبير في ستينيّات هذا القرن مع إصدار رقائق \"ليتراسيت\" البلاستيكية تحوي مقاطع من هذا النص، وعاد لينتشر مرة أخرى مؤخراَ مع ظهور برامج النشر الإلكتروني مثل \"ألدوس بايج مايكر\" والتي حوت أيضاً على نسخ من نص لوريم إيبسوم.\n\n', 'Simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s', 50),
-(3, 1, 'حسابات ضريبية', 'Tax Calc', 'storage/uploads/categories/5.png', 'لوريم إيبسوم هو ببساطة نص شكلي (بمعنى أن الغاية هي الشكل وليس المحتوى) ويُستخدم في صناعات المطابع ودور النشر. كان لوريم إيبسوم ولايزال المعيار للنص الشكلي منذ القرن الخامس عشر عندما قامت مطبعة مجهولة برص مجموعة من الأحرف بشكل عشوائي أخذتها من نص، لتكوّن كتيّب بمثابة دليل أو مرجع شكلي لهذه الأحرف. خمسة قرون من الزمن لم تقضي على هذا النص، بل انه حتى صار مستخدماً وبشكله الأصلي في الطباعة والتنضيد الإلكتروني. انتشر بشكل كبير في ستينيّات هذا القرن مع إصدار رقائق \"ليتراسيت\" البلاستيكية تحوي مقاطع من هذا النص، وعاد لينتشر مرة أخرى مؤخراَ مع ظهور برامج النشر الإلكتروني مثل \"ألدوس بايج مايكر\" والتي حوت أيضاً على نسخ من نص لوريم إيبسوم.\n\n', 'Simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s', 70),
-(4, 1, 'محاسبات مشورع', 'project Clac', NULL, 'لوريم إيبسوم هو ببساطة نص شكلي (بمعنى أن الغاية هي الشكل وليس المحتوى) ويُستخدم في صناعات المطابع ودور النشر. كان لوريم إيبسوم ولايزال المعيار للنص الشكلي منذ القرن الخامس عشر عندما قامت مطبعة مجهولة برص مجموعة من الأحرف بشكل عشوائي أخذتها من نص، لتكوّن كتيّب بمثابة دليل أو مرجع شكلي لهذه الأحرف. خمسة قرون من الزمن لم تقضي على هذا النص، بل انه حتى صار مستخدماً وبشكله الأصلي في الطباعة والتنضيد الإلكتروني. انتشر بشكل كبير في ستينيّات هذا القرن مع إصدار رقائق \"ليتراسيت\" البلاستيكية تحوي مقاطع من هذا النص، وعاد لينتشر مرة أخرى مؤخراَ مع ظهور برامج النشر الإلكتروني مثل \"ألدوس بايج مايكر\" والتي حوت أيضاً على نسخ من نص لوريم إيبسوم.\n\n', 'Simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s', 30),
-(5, 2, 'تشريع قوانين معقدة', 'complex legal rules', NULL, 'لوريم إيبسوم هو ببساطة نص شكلي (بمعنى أن الغاية هي الشكل وليس المحتوى) ويُستخدم في صناعات المطابع ودور النشر. كان لوريم إيبسوم ولايزال المعيار للنص الشكلي منذ القرن الخامس عشر عندما قامت مطبعة مجهولة برص مجموعة من الأحرف بشكل عشوائي أخذتها من نص، لتكوّن كتيّب بمثابة دليل أو مرجع شكلي لهذه الأحرف. خمسة قرون من الزمن لم تقضي على هذا النص، بل انه حتى صار مستخدماً وبشكله الأصلي في الطباعة والتنضيد الإلكتروني. انتشر بشكل كبير في ستينيّات هذا القرن مع إصدار رقائق \"ليتراسيت\" البلاستيكية تحوي مقاطع من هذا النص، وعاد لينتشر مرة أخرى مؤخراَ مع ظهور برامج النشر الإلكتروني مثل \"ألدوس بايج مايكر\" والتي حوت أيضاً على نسخ من نص لوريم إيبسوم.\n\n', 'Simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s', 45),
-(6, 2, ' تشريع قوانين بسيطة', 'simple legal rules', NULL, 'لوريم إيبسوم هو ببساطة نص شكلي (بمعنى أن الغاية هي الشكل وليس المحتوى) ويُستخدم في صناعات المطابع ودور النشر. كان لوريم إيبسوم ولايزال المعيار للنص الشكلي منذ القرن الخامس عشر عندما قامت مطبعة مجهولة برص مجموعة من الأحرف بشكل عشوائي أخذتها من نص، لتكوّن كتيّب بمثابة دليل أو مرجع شكلي لهذه الأحرف. خمسة قرون من الزمن لم تقضي على هذا النص، بل انه حتى صار مستخدماً وبشكله الأصلي في الطباعة والتنضيد الإلكتروني. انتشر بشكل كبير في ستينيّات هذا القرن مع إصدار رقائق \"ليتراسيت\" البلاستيكية تحوي مقاطع من هذا النص، وعاد لينتشر مرة أخرى مؤخراَ مع ظهور برامج النشر الإلكتروني مثل \"ألدوس بايج مايكر\" والتي حوت أيضاً على نسخ من نص لوريم إيبسوم.\r\n\r\n', 'Simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s', 20);
+INSERT INTO `sub_categories` (`id`, `category_id`, `title_ar`, `title_en`, `terms_ar`, `terms_en`, `image`) VALUES
+(2, 1, 'محاسبة مالية', 'financial calc', NULL, NULL, 'storage/uploads/categories/6.png'),
+(3, 1, 'حسابات ضريبية', 'Tax Calc', NULL, NULL, 'storage/uploads/categories/5.png'),
+(4, 1, 'محاسبات مشورع', 'project Clac', NULL, NULL, NULL),
+(5, 2, 'تشريع قوانين معقدة', 'complex legal rules', NULL, NULL, NULL),
+(6, 2, 'تشريع قوانين بسيطة', 'simple legal rules', NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -5433,7 +5679,7 @@ CREATE TABLE `users` (
   `bio` text COLLATE utf8mb4_unicode_ci,
   `graduation_rate` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `wallet` double DEFAULT '0',
-  `status` enum('0','1') COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '''0'' = active\r\n\r\n''1'' = enactive',
+  `status` enum('0','1') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '1',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -5443,21 +5689,23 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `first_name`, `last_name`, `phone`, `image`, `phone_code`, `user_type`, `email`, `consultant_type_id`, `category_id`, `city_id`, `birthdate`, `years_ex`, `consultant_price`, `bio`, `graduation_rate`, `wallet`, `status`, `created_at`, `updated_at`) VALUES
-(4, 'محمد', 'جمال', '01026638997', 'storage/uploads/users/ZG93bmxvYWQucG5n_1657790896.png', '+20', 'client', 'mohamed@mohamed.com', NULL, NULL, 2, '2001-06-03', 0, 0, NULL, NULL, 50, '1', '2022-07-14 07:28:17', '2022-09-25 11:14:19'),
-(5, 'المقدم خالد', 'محمد', '1095081882', 'storage/uploads/users/4.png', '+20', 'freelancer', NULL, NULL, 1, 357, '1993-07-03', 2, 500, 'Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet.\n', NULL, 50, '1', '2022-07-14 07:28:17', '2022-07-14 07:28:17'),
-(8, 'عماد', 'مجدي', '1017357658', 'storage/uploads/users/5.png', '+20', 'client', 'e@gmail.com', NULL, NULL, 1, '1995-05-01', 0, 0, NULL, NULL, 50, '1', '2022-07-28 15:01:39', '2022-08-02 11:38:25'),
+(4, 'محمد', 'جمال', '01026638997', 'storage/uploads/users/ZG93bmxvYWQucG5n_1657790896.png', '+20', 'client', 'mohamed@mohamed.com', NULL, NULL, 2, '2001-06-03', 0, 0, NULL, NULL, 50, '1', '2022-07-14 07:28:17', '2022-07-14 07:34:18'),
+(5, 'المقدم خالد', 'محمد', '1095081882', 'storage/uploads/users/4.png', '+20', 'freelancer', NULL, NULL, 1, 357, '1993-07-03', 2, 500, 'Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet.\n', NULL, 140, '1', '2022-07-14 07:28:17', '2022-09-21 13:38:14'),
+(8, 'عماد', 'مجدي', '1017357658', 'storage/uploads/users/5.png', '+20', 'freelancer', 'e@gmail.com', NULL, 1, 1, '1995-05-01', 0, 0, NULL, NULL, 250, '1', '2022-07-28 15:01:39', '2022-10-16 09:19:06'),
 (9, 'هشام', 'التطاوي', '559332971', 'storage/uploads/users/3.png', '+966', 'client', 'heshamtatawy@gmail.com', NULL, NULL, 3, '1995-01-01', 0, 0, NULL, NULL, 50, '1', '2022-08-16 12:01:15', '2022-08-16 12:01:15'),
-(10, 'بدير', 'الحربي', '555101487', 'storage/uploads/users/1660909261MTY2MDkwOTI2MS1RbUZrWlhJZ1lXeG9ZWEppYVE9PQ==.png', '+966', 'client', 'badr.alharbi@mail.com', NULL, NULL, 3, '1995-08-10', 0, 0, NULL, NULL, 50, '1', '2022-08-19 11:41:01', '2022-08-19 11:41:01'),
-(11, 'علي', 'عماد', '01010871488', 'storage/uploads/users/2.png', '+20', 'client', 'AliEmad@gmail.com', NULL, 2, 1, '1975-04-03', 0, 0, NULL, NULL, 80, '1', '2022-08-23 09:15:19', '2022-09-19 14:38:37'),
+(10, 'بدير', 'الحربي', '555101487', 'storage/uploads/users/1660909261MTY2MDkwOTI2MS1RbUZrWlhJZ1lXeG9ZWEppYVE9PQ==.png', '+966', 'client', 'badr.alharbi@mail.com', NULL, NULL, 3, '1995-08-10', 0, 0, NULL, NULL, 50, '1', '2022-08-19 11:41:01', '2022-10-23 12:08:00'),
+(11, 'علي', 'عماد', '01010871488', 'storage/uploads/users/2.png', '+20', 'client', 'AliEmad@gmail.com', NULL, 2, 1, '1975-04-03', 0, 0, NULL, NULL, 0, '1', '2022-08-23 09:15:19', '2022-09-28 10:58:57'),
 (12, 'محمد', 'فتحي', '01010871487', 'storage/uploads/users/1.png', '+20', 'client', NULL, NULL, NULL, 1, '2000-04-03', 0, 0, NULL, NULL, 50, '1', '2022-08-23 09:28:23', '2022-08-23 09:28:23'),
 (13, 'احمد', 'يحيي', '1098380656', 'storage/uploads/users/MTY4NDE4OGMtOTQ5Ni00NjAwLWIwNTctMDQ2OTExNDA0NDRmMzM4Njg4NzgzMzA4NDg0NDUuanBn_1661861563.jpg', '+20', 'client', 'yahya@gmail.com', NULL, NULL, 6, '1977-01-13', 0, 0, NULL, NULL, 50, '1', '2022-08-30 12:12:43', '2022-08-30 12:12:43'),
 (15, 'خالد', 'منصور', '010114478987', 'storage/uploads/users/1661946222MTY2MTk0NjIyMi0ySzdZcDltRTJLOGcyWVhaaHRpMTJZallzUT09.png', '+20', 'client', NULL, NULL, NULL, 1, '2022-04-03', 0, 0, NULL, NULL, 50, '1', '2022-08-31 11:43:42', '2022-08-31 11:43:42'),
-(16, 'محمد', 'احمد', '1062477474', 'storage/uploads/users/1.png', '+966', 'client', 'admin@admin.com', NULL, NULL, 8, '2012-01-01', 0, 0, NULL, NULL, 50, '1', '2022-09-08 08:43:27', '2022-09-08 08:43:27'),
+(16, 'محمد', 'احمد', '1062477474', 'storage/uploads/users/1.png', '+966', 'client', 'admin@admin.com', NULL, NULL, 8, '2012-01-01', 0, 0, NULL, NULL, 800, '1', '2022-09-08 08:43:27', '2022-10-16 09:48:37'),
 (23, 'كامل', 'علي', '1098789878', 'storage/uploads/users/cHJvZHVjdC1wcm9maWxlMi5qcGc=_1663149561.jpg', '+20', 'freelancer', 'kamel@gmail.com', NULL, 2, 1, '1992-04-03', 5, 0, NULL, NULL, 0, '1', '2022-09-14 09:59:21', '2022-09-14 09:59:21'),
 (24, 'كامل', 'علي', '1098789870', 'storage/uploads/users/1663242879MTY2MzI0Mjg3OS0yWVBZcDltRjJZUWcyTG5aaE5tSw==.png', '+20', 'freelancer', 'kamell@gmail.com', NULL, 2, 1, '1992-04-03', 5, 0, NULL, NULL, 0, '1', '2022-09-15 11:54:39', '2022-09-15 11:54:39'),
-(25, 'احمد', 'يحيى', '01099', 'storage/uploads/users/1663599242MTY2MzU5OTI0Mi0yS2ZZcmRtRjJLOGcyWXJZcmRtSzJZaz0=.png', '+20', 'client', 'yehia@gmail.com', NULL, 2, 1, '1992-04-03', 5, 0, NULL, NULL, 0, '1', '2022-09-19 14:54:02', '2022-09-25 11:11:16'),
-(28, 'fdffsd', 'sfdfd', '3424234234', NULL, '234', 'adviser', NULL, NULL, NULL, NULL, NULL, 43, 32, NULL, NULL, 24, '1', NULL, NULL),
-(29, 'gdfgdg', 'dfgdf', '3423424', NULL, '234', 'adviser', NULL, NULL, NULL, NULL, NULL, 234, 23, NULL, NULL, 23, '1', NULL, NULL);
+(25, 'احمد', 'يحيى', '01099', 'storage/uploads/users/1663599242MTY2MzU5OTI0Mi0yS2ZZcmRtRjJLOGcyWXJZcmRtSzJZaz0=.png', '+20', 'client', 'yehia@gmail.com', NULL, 2, 1, '1992-04-03', 5, 0, NULL, NULL, 0, '1', '2022-09-19 14:54:02', '2022-09-19 14:54:02'),
+(26, 'احمد', 'قنديل', '1090439660', 'storage/uploads/users/1664265372MTY2NDI2NTM3Mi0yS2ZZcmRtRjJLOGcyWUxaaHRpdjJZclpoQT09.png', '+20', 'client', 'ahmad.yehia@gmail.com', NULL, 2, 1, '1992-04-03', 5, 0, NULL, NULL, 0, '1', '2022-09-27 07:56:12', '2022-10-23 12:09:33'),
+(27, 'محمد رزق', 'ككك', '1098434717', 'storage/uploads/users/1664796828MTY2NDc5NjgyOC0yWVhZcmRtRjJLOGcyTEhZc3RtQ0lObUQyWVBaZ3c9PQ==.png', '+20', 'freelancer', 'hh@gmail.com', NULL, 2, 1, '2002-08-08', 1, 0, NULL, NULL, 0, '1', '2022-10-03 11:33:48', '2022-10-03 11:33:48'),
+(28, 'احمد', 'محمد', '123456789000', 'storage/uploads/users/1664797164MTY2NDc5NzE2NC0yS2ZZcmRtRjJLOGcyWVhZcmRtRjJLOD0=.png', '+20', 'freelancer', 'yah@gmail.com', NULL, 2, 1, '2000-08-06', 0, 0, NULL, NULL, 0, '1', '2022-10-03 11:39:24', '2022-10-03 11:39:24'),
+(29, 'احمد', 'محمد', '1234567890007', 'storage/uploads/users/1664797504MTY2NDc5NzUwNC0yS2ZZcmRtRjJLOGcyWVhZcmRtRjJLOD0=.png', '+20', 'freelancer', 'yahf@gmail.com', NULL, 2, 1, '2000-08-06', 0, 0, NULL, NULL, 0, '1', '2022-10-03 11:45:04', '2022-10-23 12:36:56');
 
 --
 -- Indexes for dumped tables
@@ -5468,7 +5716,7 @@ INSERT INTO `users` (`id`, `first_name`, `last_name`, `phone`, `image`, `phone_c
 --
 ALTER TABLE `admins`
   ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `admins_email_unique` (`email`);
+  ADD UNIQUE KEY `email` (`email`);
 
 --
 -- Indexes for table `advisor_categories`
@@ -5510,9 +5758,34 @@ ALTER TABLE `contact_us`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `feasibility_study`
+-- Indexes for table `feasibilities`
 --
-ALTER TABLE `feasibility_study`
+ALTER TABLE `feasibilities`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `user_relation` (`user_id`);
+
+--
+-- Indexes for table `feasibilities_categories`
+--
+ALTER TABLE `feasibilities_categories`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `feasibilities_sub_categories`
+--
+ALTER TABLE `feasibilities_sub_categories`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `feasibilities_sub_sub_categories`
+--
+ALTER TABLE `feasibilities_sub_sub_categories`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `feasibility_types`
+--
+ALTER TABLE `feasibility_types`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -5540,6 +5813,22 @@ ALTER TABLE `orders`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `order_reports`
+--
+ALTER TABLE `order_reports`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `user_id` (`user_id`),
+  ADD KEY `provider_id` (`provider_id`);
+
+--
+-- Indexes for table `personal_access_tokens`
+--
+ALTER TABLE `personal_access_tokens`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `personal_access_tokens_token_unique` (`token`),
+  ADD KEY `personal_access_tokens_tokenable_type_tokenable_id_index` (`tokenable_type`,`tokenable_id`);
+
+--
 -- Indexes for table `phone_tokens`
 --
 ALTER TABLE `phone_tokens`
@@ -5547,27 +5836,96 @@ ALTER TABLE `phone_tokens`
   ADD KEY `phone_tokens_user_id_foreign` (`user_id`);
 
 --
+-- Indexes for table `posts`
+--
+ALTER TABLE `posts`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `posts_user_id_foreign` (`user_id`),
+  ADD KEY `posts_category_id_foreign` (`category_id`),
+  ADD KEY `posts_project_id_foreign` (`project_id`);
+
+--
+-- Indexes for table `posts_actions`
+--
+ALTER TABLE `posts_actions`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `posts_actions_post_id_foreign` (`post_id`),
+  ADD KEY `posts_actions_user_id_foreign` (`user_id`);
+
+--
+-- Indexes for table `posts_consultants`
+--
+ALTER TABLE `posts_consultants`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `posts_consultants_post_id_foreign` (`post_id`),
+  ADD KEY `posts_consultants_consultant_type_id_foreign` (`consultant_type_id`);
+
+--
 -- Indexes for table `projects`
 --
 ALTER TABLE `projects`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `projects_user_id_foreign` (`user_id`),
+  ADD KEY `projects_category_id_foreign` (`category_id`);
+
+--
+-- Indexes for table `project_reviews`
+--
+ALTER TABLE `project_reviews`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `report_details`
+-- Indexes for table `rate_providers`
 --
-ALTER TABLE `report_details`
+ALTER TABLE `rate_providers`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `service_request`
+-- Indexes for table `reports`
 --
-ALTER TABLE `service_request`
-  ADD PRIMARY KEY (`id`);
+ALTER TABLE `reports`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `reports_from_user_id_foreign` (`user_id`),
+  ADD KEY `reports_to_user_id_foreign` (`provider_id`);
+
+--
+-- Indexes for table `rooms`
+--
+ALTER TABLE `rooms`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `rooms_user_id_foreign` (`user_id`),
+  ADD KEY `rooms_adviser_id_foreign` (`adviser_or_freelancer_id`),
+  ADD KEY `rooms_consultation_id_foreign` (`consultation_id`),
+  ADD KEY `rooms_post_id_foreign` (`post_id`);
+
+--
+-- Indexes for table `room_messages`
+--
+ALTER TABLE `room_messages`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `room_messages_from_user_id_foreign` (`from_user_id`),
+  ADD KEY `room_messages_to_user_id_foreign` (`to_user_id`),
+  ADD KEY `room_messages_room_id_foreign` (`room_id`);
+
+--
+-- Indexes for table `service_requests`
+--
+ALTER TABLE `service_requests`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `provider` (`provider_id`),
+  ADD KEY `user_request_service` (`user_id`),
+  ADD KEY `room` (`room_id`);
 
 --
 -- Indexes for table `setting`
 --
 ALTER TABLE `setting`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `sliders`
+--
+ALTER TABLE `sliders`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -5580,7 +5938,10 @@ ALTER TABLE `sub_categories`
 -- Indexes for table `users`
 --
 ALTER TABLE `users`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `users_city_id_foreign` (`city_id`),
+  ADD KEY `users_consultant_type_id_foreign` (`consultant_type_id`),
+  ADD KEY `users_category_id_foreign` (`category_id`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -5590,43 +5951,187 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `admins`
 --
 ALTER TABLE `admins`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `advisor_categories`
+--
+ALTER TABLE `advisor_categories`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
 
 --
 -- AUTO_INCREMENT for table `categories`
 --
 ALTER TABLE `categories`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
--- AUTO_INCREMENT for table `feasibility_study`
+-- AUTO_INCREMENT for table `cities`
 --
-ALTER TABLE `feasibility_study`
-  MODIFY `id` bigint(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+ALTER TABLE `cities`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4582;
+
+--
+-- AUTO_INCREMENT for table `consultant_types`
+--
+ALTER TABLE `consultant_types`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT for table `consultations`
+--
+ALTER TABLE `consultations`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `contact_us`
+--
+ALTER TABLE `contact_us`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+
+--
+-- AUTO_INCREMENT for table `feasibilities`
+--
+ALTER TABLE `feasibilities`
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+
+--
+-- AUTO_INCREMENT for table `feasibilities_categories`
+--
+ALTER TABLE `feasibilities_categories`
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=55;
+
+--
+-- AUTO_INCREMENT for table `feasibilities_sub_categories`
+--
+ALTER TABLE `feasibilities_sub_categories`
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+
+--
+-- AUTO_INCREMENT for table `feasibilities_sub_sub_categories`
+--
+ALTER TABLE `feasibilities_sub_sub_categories`
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `feasibility_types`
+--
+ALTER TABLE `feasibility_types`
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT for table `investments`
+--
+ALTER TABLE `investments`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `migrations`
+--
+ALTER TABLE `migrations`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+
+--
+-- AUTO_INCREMENT for table `notifications`
+--
+ALTER TABLE `notifications`
+  MODIFY `id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT for table `orders`
+--
+ALTER TABLE `orders`
+  MODIFY `id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=139;
+
+--
+-- AUTO_INCREMENT for table `order_reports`
+--
+ALTER TABLE `order_reports`
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `personal_access_tokens`
+--
+ALTER TABLE `personal_access_tokens`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `phone_tokens`
+--
+ALTER TABLE `phone_tokens`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+
+--
+-- AUTO_INCREMENT for table `posts`
+--
+ALTER TABLE `posts`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+
+--
+-- AUTO_INCREMENT for table `posts_actions`
+--
+ALTER TABLE `posts_actions`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=61;
+
+--
+-- AUTO_INCREMENT for table `posts_consultants`
+--
+ALTER TABLE `posts_consultants`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT for table `projects`
 --
 ALTER TABLE `projects`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 
 --
--- AUTO_INCREMENT for table `report_details`
+-- AUTO_INCREMENT for table `project_reviews`
 --
-ALTER TABLE `report_details`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+ALTER TABLE `project_reviews`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 
 --
--- AUTO_INCREMENT for table `service_request`
+-- AUTO_INCREMENT for table `rate_providers`
 --
-ALTER TABLE `service_request`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+ALTER TABLE `rate_providers`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `reports`
+--
+ALTER TABLE `reports`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+
+--
+-- AUTO_INCREMENT for table `rooms`
+--
+ALTER TABLE `rooms`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=80;
+
+--
+-- AUTO_INCREMENT for table `room_messages`
+--
+ALTER TABLE `room_messages`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=339;
+
+--
+-- AUTO_INCREMENT for table `service_requests`
+--
+ALTER TABLE `service_requests`
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `setting`
 --
 ALTER TABLE `setting`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `sliders`
+--
+ALTER TABLE `sliders`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `sub_categories`
@@ -5639,6 +6144,106 @@ ALTER TABLE `sub_categories`
 --
 ALTER TABLE `users`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `consultations`
+--
+ALTER TABLE `consultations`
+  ADD CONSTRAINT `consultations_adviser_id_foreign` FOREIGN KEY (`adviser_id`) REFERENCES `users` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `consultations_post_id_foreign` FOREIGN KEY (`post_id`) REFERENCES `posts` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `consultations_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `feasibilities`
+--
+ALTER TABLE `feasibilities`
+  ADD CONSTRAINT `user_relation` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `order_reports`
+--
+ALTER TABLE `order_reports`
+  ADD CONSTRAINT `order_reports_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `order_reports_ibfk_2` FOREIGN KEY (`provider_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `phone_tokens`
+--
+ALTER TABLE `phone_tokens`
+  ADD CONSTRAINT `phone_tokens_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `posts`
+--
+ALTER TABLE `posts`
+  ADD CONSTRAINT `posts_category_id_foreign` FOREIGN KEY (`category_id`) REFERENCES `categories` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `posts_project_id_foreign` FOREIGN KEY (`project_id`) REFERENCES `projects` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `posts_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `posts_actions`
+--
+ALTER TABLE `posts_actions`
+  ADD CONSTRAINT `posts_actions_post_id_foreign` FOREIGN KEY (`post_id`) REFERENCES `posts` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `posts_actions_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `posts_consultants`
+--
+ALTER TABLE `posts_consultants`
+  ADD CONSTRAINT `posts_consultants_consultant_type_id_foreign` FOREIGN KEY (`consultant_type_id`) REFERENCES `consultant_types` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `posts_consultants_post_id_foreign` FOREIGN KEY (`post_id`) REFERENCES `posts` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `projects`
+--
+ALTER TABLE `projects`
+  ADD CONSTRAINT `projects_category_id_foreign` FOREIGN KEY (`category_id`) REFERENCES `categories` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `projects_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `reports`
+--
+ALTER TABLE `reports`
+  ADD CONSTRAINT `reports_from_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `reports_to_user_id_foreign` FOREIGN KEY (`provider_id`) REFERENCES `users` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `rooms`
+--
+ALTER TABLE `rooms`
+  ADD CONSTRAINT `rooms_adviser_id_foreign` FOREIGN KEY (`adviser_or_freelancer_id`) REFERENCES `users` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `rooms_consultation_id_foreign` FOREIGN KEY (`consultation_id`) REFERENCES `consultations` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `rooms_post_id_foreign` FOREIGN KEY (`post_id`) REFERENCES `posts` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `rooms_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `room_messages`
+--
+ALTER TABLE `room_messages`
+  ADD CONSTRAINT `room_messages_from_user_id_foreign` FOREIGN KEY (`from_user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `room_messages_room_id_foreign` FOREIGN KEY (`room_id`) REFERENCES `rooms` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `room_messages_to_user_id_foreign` FOREIGN KEY (`to_user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `service_requests`
+--
+ALTER TABLE `service_requests`
+  ADD CONSTRAINT `provider` FOREIGN KEY (`provider_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `room` FOREIGN KEY (`room_id`) REFERENCES `rooms` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `user_request_service` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `users`
+--
+ALTER TABLE `users`
+  ADD CONSTRAINT `users_category_id_foreign` FOREIGN KEY (`category_id`) REFERENCES `categories` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `users_city_id_foreign` FOREIGN KEY (`city_id`) REFERENCES `cities` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `users_consultant_type_id_foreign` FOREIGN KEY (`consultant_type_id`) REFERENCES `consultant_types` (`id`) ON DELETE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
