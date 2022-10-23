@@ -17,7 +17,7 @@
         </div>
         <div class="form-group">
             <label for="name" class="form-control-label">عدد الطلبات</label>
-            <input type="text" class="form-control" name="order_count" id="order_count" value="{{$category->order_count}}">
+            <input type="text" class="form-control" name="limit" id="order_count" value="{{$category->limit}}">
         </div>
         <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">اغلاق</button>

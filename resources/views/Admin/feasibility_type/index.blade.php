@@ -1,32 +1,34 @@
 @extends('Admin/layouts/master')
 
 @section('title')
-    {{($setting->title) ?? ''}} | البلاغات
+    {{($setting->title) ?? ''}} | نوع دراسة الجدوي
 @endsection
-@section('page_name') البلاغات @endsection
+@section('page_name') نوع دراسة الجدوي @endsection
 @section('content')
 
     <div class="row">
         <div class="col-md-12 col-lg-12">
             <div class="card">
                 <div class="card-header">
-                    <h3 class="card-title"> البلاغات {{($setting->title) ?? ''}}</h3>
+                    <h3 class="card-title"> نوع دراسة الجدوي {{($setting->title) ?? ''}}</h3>
+                    <div class="">
+                        <button class="btn btn-secondary btn-icon text-white addBtn">
+									<span>
+										<i class="fe fe-plus"></i>
+									</span> اضافة جديد
+                        </button>
+                    </div>
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
                         <!--begin::Table-->
-                        <table class="table table-striped table-bordered text-wrap w-100" id="dataTable">
+                        <table class="table table-striped table-bordered text-nowrap w-100" id="dataTable">
                             <thead>
                             <tr class="fw-bolder text-muted bg-light">
                                 <th class="min-w-25px">#</th>
-                                <th class="min-w-50px">اسم العميل</th>
-                                <th class="min-w-50px">اسم مقدم الخدمة</th>
-                                <th class="min-w-50px">الخدمة</th>
-                                <th class="min-w-50px">السبب</th>
-                                <th class="min-w-50px">التفاصيل</th>
-                                <th class="min-w-50px">صوره</th>
-                                <th class="min-w-50px">تاريخ الطلب</th>
-                                 <th class="min-w-50px rounded-end">العمليات</th>
+                                <th class="min-w-50px">النوع</th>
+                                <th class="min-w-25px">الصورة</th>
+                                <th class="min-w-50px rounded-end">العمليات</th>
                             </tr>
                             </thead>
                         </table>
@@ -66,7 +68,7 @@
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="example-Modal3">بيانات المشرف</h5>
+                        <h5 class="modal-title" id="example-Modal3">البيانات </h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -82,23 +84,23 @@
     @include('Admin/layouts/myAjaxHelper')
 @endsection
 @section('ajaxCalls')
-
     <script>
         var columns = [
             {data: 'id', name: 'id'},
-            {data: 'user_id', name: 'user_id'},
-            {data: 'provider_id', name: 'provider_id'},
-            {data: 'order_id', name: 'order_id'},
-            {data: 'reason', name: 'reason'},
-            {data: 'details', name: 'details'},
+            {data: 'type', name: 'type'},
             {data: 'img', name: 'img'},
-            {data: 'created_at', name: 'created_at'},
 
             {data: 'action', name: 'action', orderable: false, searchable: false},
         ]
-        showData('{{route('reports_index')}}', columns);
+        showData('{{route('feasibility_type.index')}}', columns);
         // Delete Using Ajax
-        deleteScript('{{route('delete_reports')}}');
+        deleteScript('{{route('delete_feasibility_type')}}');
+        // Add Using Ajax
+        showAddModal('{{route('feasibility_type.create')}}');
+        addScript();
+        // Add Using Ajax
+        showEditModal('{{route('feasibility_type.edit',':id')}}');
+        editScript();
     </script>
 @endsection
 

@@ -27,17 +27,14 @@ class ServicesRequestController extends Controller
                             </button>
                        ';
                 })
-                ->editColumn('freelancer_id', function($data){
-                    return $data->freelancer->first_name;
+                ->editColumn('provider_id', function($data){
+                    return $data->provider->first_name;
                 })
-                ->editColumn('client_id', function($data){
-                    return $data->client->first_name;
+                ->editColumn('user_id', function($data){
+                    return $data->user->first_name;
                 })
                 ->editColumn('sub_category_id', function($data){
-                    return $data->subCategory->title_ar;
-                })
-                ->editColumn('created_at', function($data){
-                    return $data->created_at->format('m/d/Y');
+                    return $data->subcategory->title_ar;
                 })
                 ->escapeColumns([])
                 ->make(true);

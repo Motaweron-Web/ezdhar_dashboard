@@ -28,9 +28,8 @@ class StoreSubCategory extends FormRequest
             'category_id'      => 'required',
             'title_ar'      => 'required',
             'title_en'      => 'required',
-            'terms_ar'      => 'required',
-            'terms_en'      => 'required',
-            'price'      => ['required','numeric'],
+            'terms_ar'      => 'nullable',
+            'terms_en'      => 'nullable',
             'image'     => 'mimes:jpeg,jpg,png,gif,webp',
         ];
     }
@@ -41,10 +40,8 @@ class StoreSubCategory extends FormRequest
             'image.mimes'                => 'صيغة الصورة غير مسموحة',
             'title_ar.required'              => 'يجب ادخال الاسم',
             'title_en.required'              => 'يجب ادخال الاسم',
-            'terms_ar.required'              => 'يجب ادخال الشروط',
-            'terms_en.required'              => 'يجب ادخال الشروط',
-            'price.required'              => 'يجب ادخال السعر',
-            'price.numeric'              => 'يجب ادخال رقم',
+//            'terms_ar.required'              => 'يجب ادخال الشروط',
+//            'terms_en.required'              => 'يجب ادخال الشروط',
             'category_id.required'              => 'يجب ادخال القسم',
         ];
     }

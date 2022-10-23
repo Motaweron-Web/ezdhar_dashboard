@@ -38,6 +38,10 @@ Route::group(['prefix'=>'admin','middleware'=>'auth:admin'],function (){
     Route::resource('feasibility_study','FeasibilityStudyController');
     Route::POST('delete_feasibility_study','FeasibilityStudyController@delete')->name('delete_feasibility_study');
 
+    ################ feasibility type ##################
+    Route::resource('/feasibility_type','FeasibilityTypeController');
+    Route::POST('/delete_feasibility_type','FeasibilityTypeController@delete')->name('delete_feasibility_type');
+
     ################### projects ###############
     Route::resource('projects','ProjectsController');
     Route::POST('delete_projects','ProjectsController@delete')->name('delete_projects');

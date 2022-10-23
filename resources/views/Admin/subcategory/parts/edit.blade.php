@@ -31,10 +31,10 @@
             <label for="name" class="form-control-label">الشروط بالانجليزية</label>
             <input type="text" class="form-control" name="terms_en" id="terms_en" value="{{$subcategory->terms_en}}">
         </div>
-        <div class="form-group">
-            <label for="name" class="form-control-label">السعر</label>
-            <input type="text" class="form-control" name="price" id="price" value="{{$subcategory->price}}">
-        </div>
+{{--        <div class="form-group">--}}
+{{--            <label for="name" class="form-control-label">السعر</label>--}}
+{{--            <input type="text" class="form-control" name="price" id="price" value="{{$subcategory->price}}">--}}
+{{--        </div>--}}
         <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">اغلاق</button>
             <button type="submit" class="btn btn-success" id="updateButton">تحديث</button>

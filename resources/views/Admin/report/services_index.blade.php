@@ -23,27 +23,31 @@
                                 <th class="min-w-50px">اسم العميل</th>
                                 <th class="min-w-50px">اسم مقدم الخدمة</th>
                                 <th class="min-w-50px">القسم</th>
-                                <th class="min-w-50px">السعر</th>
+                                <th class="min-w-50px">الصورة</th>
+                                <th class="min-w-50px">حالة السداد</th>
+                                <th class="min-w-50px">حالة</th>
                                 <th class="min-w-50px">التفاصيل</th>
                                 <th class="min-w-50px">تاريخ الطلب</th>
                                 <th class="min-w-50px rounded-end">العمليات</th>
                             </tr>
                             </thead>
-                            @foreach($services as $service)
                                 <tbody>
                                 <tr>
-
-                                    <td>{{ $loop->iteration }}</td>
-                                    <td>{{ $service->client->first_name }}</td>
-                                    <td>{{ $service->freelancer->first_name }}</td>
-                                    <td>{{ $service->subCategory->title_ar }}</td>
-                                    <td>{{ $service->price }}</td>
-                                    <td>{{ $service->details }}</td>
-                                    <td>{{ $service->created_at->format('m/d/Y') }}</td>
+                                    <td>{{ $order->id }}</td>
+                                    <td>{{ $order->user->first_name }}</td>
+                                    <td>{{ $order->provider->first_name }}</td>
+                                    <td>{{ $order->subcategory->title_ar }}</td>
+                                    <td>
+                                        <img alt="image" onclick="window.open(this.src)" class="avatar avatar-md rounded-circle" src="{{get_user_file($order->img)}}">
+                                    </td>
+                                    <td>{{ $order->payment_status }}</td>
+                                    <td>{{ $order->status }}</td>
+                                    <td>{{ $order->details }}</td>
+                                    <td>{{ $order->created_at->format('m/d/Y') }}</td>
                                     <td>
                                         <form method="post" action="{{ route('delete_services') }}">
                                             @csrf
-                                            <input type="hidden" value="{{ $service->id }}" name="id">
+                                            <input type="hidden" value="{{ $order->id }}" name="id">
                                             <button class="btn btn-pill btn-danger-light" type="submit">
                                                 <i class="fas fa-trash"></i>
                                             </button>
@@ -51,7 +55,6 @@
                                     </td>
                                 </tr>
                                 </tbody>
-                            @endforeach
                         </table>
                     </div>
                 </div>

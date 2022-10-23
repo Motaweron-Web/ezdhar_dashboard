@@ -92,7 +92,7 @@
             {data: 'image', name: 'image'},
             {data: 'title_ar', name: 'title_ar'},
             {data: 'title_en', name: 'title_en'},
-            {data: 'order_count', name: 'order_count'},
+            {data: 'limit', name: 'limit'},
             {data: 'action', name: 'action', orderable: false, searchable: false},
         ]
         showData('{{route('categories.index')}}', columns);

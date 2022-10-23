@@ -40,6 +40,13 @@
         </li>
 
         <li class="slide">
+            <a class="side-menu__item" href="{{route('feasibility_type.index')}}">
+                <i class="fe fe-book side-menu__icon"></i>
+                <span class="side-menu__label">نوع دراسة الجدوي</span>
+            </a>
+        </li>
+
+        <li class="slide">
             <a class="side-menu__item" href="{{route('projects.index')}}">
                 <i class="fe fe-package side-menu__icon"></i>
                 <span class="side-menu__label">المشاريع</span>

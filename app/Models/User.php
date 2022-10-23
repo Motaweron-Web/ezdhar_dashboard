@@ -26,7 +26,15 @@ class User extends Authenticatable
         return $this->hasMany(Site::class,'user_id');
     }
 
+    public function feasibility()
+    {
+        return $this->hasMany(FeasibilityStudy::class);
+    }
 
+    public function orders()
+    {
+        return $this->hasMany(Order::class);
+    }
 
 
 }

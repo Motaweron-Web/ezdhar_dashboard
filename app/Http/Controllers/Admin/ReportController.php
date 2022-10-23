@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Models\Order;
 use App\Models\Report;
 use App\Http\Controllers\Controller;
 use App\Models\ServicesRequest;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
 use App\Traits\PhotoTrait;
@@ -29,8 +31,11 @@ class ReportController extends Controller
                 ->editColumn('user_id', function ($data){
                     return $data->user->first_name;
                 })
-                ->editColumn('ser', function($reports){
-                    return '<form method="get" action="'. route('service_reports' ,  $reports->user->id) .'">
+                ->editColumn('provider_id', function ($data){
+                    return $data->provider->first_name;
+                })
+                ->editColumn('order_id', function($reports){
+                    return '<form method="get" action="'. route('service_reports' ,  $reports->order_id) .'">
                                                 <button class="btn btn-pill btn-info-light" type="submit">
                                                     <i class="fas fa-door-open"></i>
                                                 </button>
@@ -39,9 +44,9 @@ class ReportController extends Controller
                 ->editColumn('created_at', function ($data){
                     return $data->created_at->format('m/d/Y');
                 })
-                ->editColumn('image', function ($reports) {
+                ->editColumn('img', function ($reports) {
                     return '
-                    <img alt="image" onclick="window.open(this.src)" class="avatar avatar-md rounded-circle" src="' . get_user_file($reports->image) . '">
+                    <img alt="image" onclick="window.open(this.src)" class="avatar avatar-md rounded-circle" src="' . get_user_file($reports->img) . '">
                     ';
                 })
                 ->escapeColumns([])
@@ -53,8 +58,9 @@ class ReportController extends Controller
 
     public function service(Request $request,  $id)
     {
-        $services = ServicesRequest::where('client_id', $id)->get();
-        return view('Admin.report.services_index',compact('services'));
+            $order = Order::find($id);
+            return view('Admin.report.services_index', compact('order'));
+
     }
 
     public function delete(Request $request)

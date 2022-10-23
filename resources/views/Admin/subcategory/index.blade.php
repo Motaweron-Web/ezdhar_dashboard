@@ -34,7 +34,6 @@
                                 <th class="min-w-50px">الصورة</th>
                                 <th class="min-w-50px">شروط التقدم بالعربية</th>
                                 <th class="min-w-50px">شروط التقدم بالانجليزية</th>
-                                <th class="min-w-50px">السعر</th>
                                 <th class="min-w-50px rounded-end">العمليات</th>
                             </tr>
                             </thead>
@@ -100,7 +99,6 @@
             {data: 'image', name: 'image'},
             {data: 'terms_ar', name: 'terms_ar'},
             {data: 'terms_en', name: 'terms_en'},
-            {data: 'price', name: 'price'},
             {data: 'action', name: 'action', orderable: false, searchable: false},
         ]
         showData('{{route('subcategories.index')}}', columns);

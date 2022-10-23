@@ -16,7 +16,7 @@
     </div>
     <div class="form-group">
         <label for="name" class="form-control-label">عدد الطلبات</label>
-        <input type="number" class="form-control" name="order_count" id="order_count">
+        <input type="number" class="form-control" name="limit" id="order_count">
     </div>
 
     <div class="modal-footer">

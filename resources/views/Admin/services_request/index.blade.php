@@ -19,12 +19,13 @@
                             <thead>
                             <tr class="fw-bolder text-muted bg-light">
                                 <th class="min-w-25px">#</th>
-                                <th class="min-w-50px">اسم العميل</th>
-                                <th class="min-w-50px">اسم مقدم الخدمة</th>
-                                <th class="min-w-50px">القسم</th>
-                                <th class="min-w-50px">السعر</th>
-                                <th class="min-w-50px">التفاصيل</th>
-                                <th class="min-w-50px">تاريخ الطلب</th>
+                                <th class="min-w-25px">مقدم الخدمة</th>
+                                <th class="min-w-25px">العميل</th>
+                                <th class="min-w-25px">القسم</th>
+                                <th class="min-w-25px">السعر</th>
+                                <th class="min-w-25px">تاريخ التسليم</th>
+                                <th class="min-w-25px">التفاصيل</th>
+
                                  <th class="min-w-50px rounded-end">العمليات</th>
                             </tr>
                             </thead>
@@ -84,12 +85,12 @@
     <script>
         var columns = [
             {data: 'id', name: 'id'},
-            {data: 'client_id', name: 'client_id'},
-            {data: 'freelancer_id', name: 'freelancer_id'},
+            {data: 'provider_id', name: 'provider_id'},
+            {data: 'user_id', name: 'user_id'},
             {data: 'sub_category_id', name: 'sub_category_id'},
             {data: 'price', name: 'price'},
+            {data: 'delivery_date', name: 'delivery_date'},
             {data: 'details', name: 'details'},
-            {data: 'created_at', name: 'created_at'},
             {data: 'action', name: 'action', orderable: false, searchable: false},
         ]
         showData('{{route('services.index')}}', columns);

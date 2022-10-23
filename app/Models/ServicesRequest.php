@@ -9,29 +9,31 @@ class ServicesRequest extends Model
 {
     use HasFactory;
 
-    protected $table = 'service_request';
+    protected $table = 'service_requests';
+
 
     protected $fillable = [
-        'freelancer_id',
-        'client_id',
-        'price',
+        'provider_id',
+        'user_id',
         'sub_category_id',
+        'price',
+        'delivery_date',
         'details',
-        'created_at',
-        'updated_at',
+        'room_id',
+        'status',
     ];
 
-    public function freelancer()
+    public function provider()
     {
-       return $this->belongsTo(Users::class,'freelancer_id','id');
+       return $this->belongsTo(Users::class,'provider_id','id');
     }
 
-    public function client()
+    public function user()
     {
-      return  $this->belongsTo(Users::class,'client_id','id');
+      return  $this->belongsTo(Users::class,'user_id','id');
     }
 
-    public function subCategory()
+    public function subcategory()
     {
         return  $this->belongsTo(SubCategory::class,'sub_category_id','id');
     }

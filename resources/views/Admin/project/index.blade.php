@@ -85,7 +85,7 @@
     <script>
         var columns = [
             {data: 'id', name: 'id'},
-            {data: 'title', name: 'title'},
+            {data: 'title_ar', name: 'title_ar'},
             {data: 'image', name: 'image'},
             {data: 'ownership_rate', name: 'ownership_rate'},
             {data: 'success_rate', name: 'success_rate'},

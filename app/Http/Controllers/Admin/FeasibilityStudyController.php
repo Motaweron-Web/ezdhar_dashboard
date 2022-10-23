@@ -22,17 +22,23 @@ class FeasibilityStudyController extends Controller
             return Datatables::of($feasibility_study)
                 ->addColumn('action', function ($feasibility_study) {
                     return '
-                            <button type="button" data-id="' . $feasibility_study->id . '" class="btn btn-pill btn-info-light editBtn"><i class="fa fa-edit"></i></button>
+
                             <button class="btn btn-pill btn-danger-light" data-toggle="modal" data-target="#delete_modal"
                                     data-id="' . $feasibility_study->id . '" data-title="' . $feasibility_study->name . '">
                                     <i class="fas fa-trash"></i>
                             </button>
                        ';
                 })
-                ->editColumn('image', function ($feasibility_study) {
+                ->editColumn('img', function ($feasibility_study) {
                     return '
-                    <img alt="image" onclick="window.open(this.src)" class="avatar avatar-md rounded-circle" src="'.get_user_file($feasibility_study->image).'">
+                    <img alt="image" onclick="window.open(this.src)" class="avatar avatar-md rounded-circle" src="'.get_user_file($feasibility_study->img).'">
                     ';
+                })
+                ->editColumn('feasibility_type_id', function ($feasibility_study){
+                    return $feasibility_study->feastype->type;
+                })
+                ->editColumn('user_id',function ($feasibility_study){
+                  return $feasibility_study->user->first_name;
                 })
                 ->escapeColumns([])
                 ->make(true);
@@ -89,3 +95,5 @@ class FeasibilityStudyController extends Controller
             return response()->json(['status' => 405]);
     }
 }
+
+//  <button type="button" data-id="' . $feasibility_study->id . '" class="btn btn-pill btn-info-light editBtn"><i class="fa fa-edit"></i></button>

@@ -23,7 +23,7 @@ class ProjectsController extends Controller
                 ->addColumn('action', function ($projects) {
                     return '
                             <button class="btn btn-pill btn-danger-light" data-toggle="modal" data-target="#delete_modal"
-                                    data-id="' . $projects->id . '" data-title="' . $projects->title . '">
+                                    data-id="' . $projects->id . '" data-title="' . $projects->title_ar . '">
                                     <i class="fas fa-trash"></i>
                             </button>
                        ';
